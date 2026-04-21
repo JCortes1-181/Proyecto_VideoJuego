@@ -18,13 +18,16 @@ public class InteraccionObjeto : MonoBehaviour
 
     void Update()
     {
+        // --- PARACHOQUES DE SEGURIDAD ---
+        // Si falta el diálogo o el texto (común al venir del Menú), salimos del Update
+        if (cuadroDialogo == null || textoUI == null) return;
+
         if (jugadorCerca && Input.GetKeyDown(KeyCode.X))
         {
             GameObject jugador = GameObject.FindWithTag("Player");
 
             if (!cuadroDialogo.activeSelf)
             {
-                
                 if (jugador != null) 
                 {
                     var scriptMov = jugador.GetComponent<MovimientoJugador>();
@@ -33,27 +36,24 @@ public class InteraccionObjeto : MonoBehaviour
 
                 textoUI.text = mensaje;
                 cuadroDialogo.SetActive(true);
-                indicadorX.SetActive(false);
+                if (indicadorX != null) indicadorX.SetActive(false);
             }
             else
             {
-                
                 cuadroDialogo.SetActive(false);
 
                 if (cambiaDeEscena) 
                 {
-                    
                     SceneManager.LoadScene(nombreEscenaPizzeria); 
                 }
                 else 
                 {
-                   
                     if (jugador != null) 
                     {
                         var scriptMov = jugador.GetComponent<MovimientoJugador>();
                         if(scriptMov != null) scriptMov.enabled = true;
                     }
-                    indicadorX.SetActive(true);
+                    if (indicadorX != null) indicadorX.SetActive(true);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class InteraccionObjeto : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             jugadorCerca = true;
-            indicadorX.SetActive(true);
+            if (indicadorX != null) indicadorX.SetActive(true);
         }
     }
 
@@ -73,8 +73,8 @@ public class InteraccionObjeto : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             jugadorCerca = false;
-            indicadorX.SetActive(false);
-            cuadroDialogo.SetActive(false);
+            if (indicadorX != null) indicadorX.SetActive(false);
+            if (cuadroDialogo != null) cuadroDialogo.SetActive(false);
         }
     }
 }
