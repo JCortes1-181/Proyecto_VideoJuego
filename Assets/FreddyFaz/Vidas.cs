@@ -9,6 +9,12 @@ public class ControladorVidas : MonoBehaviour
     public GameObject objetoJumpscare; 
     public AudioSource sonidoGrito;   
 
+   void Start() 
+    {
+        // Esto refresca los corazones apenas entras a la oficina
+        ActualizarVisualVidas();
+    }
+
     public void ActualizarVisualVidas() {
         for (int i = 0; i < corazonesUI.Length; i++) {
             if(corazonesUI[i] != null) corazonesUI[i].SetActive(i < vidasGlobales);

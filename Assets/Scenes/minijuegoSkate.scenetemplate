@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13966, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: minijuegoSkate
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.SceneTemplate.SceneTemplateAsset
+  templateScene: {fileID: 102900000, guid: 3e85f8c2037db5b409a72502d44c630c, type: 3}
+  templateName: 
+  description: 
+  preview: {fileID: 0}
+  dependencies:
+  - dependency: {fileID: 497722910769201719, guid: 41e740f3c48345d41a0fec8284df2ab8, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 17b16b91e4cb4fa44b911908286a7b39, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 976873b8cad8f2543bc83b179a7432ea, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 5f002e0b5cefc4444a20a13734b179a0, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 18ec4bf8623c61f4f920161d9163c482, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 8300000, guid: 3a935c37dced3104d9115dbec15b0eaf, type: 3}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: 38d62c31aa110e641a0457c1f17efc8e, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 3ffc17bb219933046b1204a06c88e8f8, type: 3}
+    instantiationMode: 0
+  templatePipeline: {fileID: 0}
+  badge: {fileID: 0}
+  addToDefaults: 0

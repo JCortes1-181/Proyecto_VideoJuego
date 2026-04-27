@@ -2,8 +2,10 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Suelo
+  - Obstaculo
   layers:
   - Default
   - TransparentFX
@@ -38,6 +40,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Fondo_Lejos
+    uniqueID: 3818651303
+    locked: 0
+  - name: Nubes
+    uniqueID: 270275641
+    locked: 0
+  - name: Personaje
+    uniqueID: 2937082215
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  m_RenderingLayers:
+  - Default
