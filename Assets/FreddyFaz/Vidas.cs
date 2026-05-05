@@ -8,6 +8,7 @@ public class ControladorVidas : MonoBehaviour
     public GameObject[] corazonesUI;   
     public GameObject objetoJumpscare; 
     public AudioSource sonidoGrito;   
+    public AudioSource musicaDeFondo;
 
    void Start() 
     {
@@ -16,13 +17,15 @@ public class ControladorVidas : MonoBehaviour
     }
 
     public void ActualizarVisualVidas() {
-        for (int i = 0; i < corazonesUI.Length; i++) {
-            if(corazonesUI[i] != null) corazonesUI[i].SetActive(i < vidasGlobales);
-        }
+        // ... (tu lógica de corazones) ...
 
         if (vidasGlobales <= 0) {
-            StartCoroutine(SecuenciaJumpscare());
-        }
+    // Buscamos al gestor de música y lo apagamos
+    if (MusicaControl.instancia != null) {
+    MusicaControl.instancia.DetenerMusica();
+}
+    StartCoroutine(SecuenciaJumpscare());
+}
     }
 
     IEnumerator SecuenciaJumpscare() {

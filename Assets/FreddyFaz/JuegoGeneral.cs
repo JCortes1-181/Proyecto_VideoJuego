@@ -6,41 +6,52 @@ using UnityEngine.SceneManagement;
 
 public class JuegoGeneral : MonoBehaviour
 {
-    [Header("Escenas")]
+    [Header("Escenas y Objetos")]
     public GameObject Oficina_Normal;      
-    public GameObject MiniJuego;          
+    public GameObject MiniJuegoInterno; // El de los panes          
     public GameObject Estatica_Efecto;
     public GameObject ContenedorCorazones; 
+
     [Header("UI")]
     public TextMeshProUGUI textoTiempo;   
     public GameObject Perdiste_Gif, Ganaste_Gif;
 
-    [Header("Minijuego")]
+    [Header("Configuración Mario (Interno)")]
     public List<GameObject> TodosLosPanes; 
     public Movimiento_Mario ScriptTeto;   
 
     [Header("Ajustes")]
     public float tiempoRonda = 10f;       
-    
     private float timerActual;
     private bool juegoActivo = false;
 
     void Start() {
         timerActual = tiempoRonda;
         Oficina_Normal.SetActive(true);
-        MiniJuego.SetActive(false);
+        MiniJuegoInterno.SetActive(false);
         if(ContenedorCorazones) ContenedorCorazones.SetActive(true);
         
-        Invoke("IniciarCiclo", 3f);
+        // Actualizar corazones al empezar por si venimos de otra escena
+        ControladorVidas gestor = FindObjectOfType<ControladorVidas>();
+        if (gestor != null) gestor.ActualizarVisualVidas();
+
+        Invoke("DecidirSiguienteReto", 3f);
     }
 
-    void IniciarCiclo() { 
-        if (ControladorVidas.vidasGlobales > 0) {
-            StartCoroutine(TransicionEntrada()); 
+    // NUEVO: Lógica 50/50 entre Mario (Interno) o Skate (Escena aparte)
+    void DecidirSiguienteReto() {
+        if (ControladorVidas.vidasGlobales <= 0) return;
+
+        float suerte = Random.Range(0f, 100f);
+
+        if (suerte < 50f) {
+            StartCoroutine(TransicionEntradaMario()); // Se queda en esta escena
+        } else {
+            SceneManager.LoadScene("MinijuegoSkate"); // Carga la escena del Skate
         }
     }
 
-    IEnumerator TransicionEntrada() {
+    IEnumerator TransicionEntradaMario() {
         foreach (GameObject p in TodosLosPanes) if (p != null) p.SetActive(true);
         if(ScriptTeto != null) ScriptTeto.ResetearPosicion();
         
@@ -50,11 +61,10 @@ public class JuegoGeneral : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         if(Estatica_Efecto) Estatica_Efecto.SetActive(false);
 
-       
         Oficina_Normal.SetActive(false);
         if(ContenedorCorazones) ContenedorCorazones.SetActive(false);
         
-        MiniJuego.SetActive(true);
+        MiniJuegoInterno.SetActive(true);
         juegoActivo = true;
     }
 
@@ -80,7 +90,7 @@ public class JuegoGeneral : MonoBehaviour
     }
 
     IEnumerator SecuenciaResultado(bool ganado) {
-        MiniJuego.SetActive(false);
+        MiniJuegoInterno.SetActive(false);
 
         if (ganado) {
             Ganaste_Gif.SetActive(true);
@@ -94,18 +104,15 @@ public class JuegoGeneral : MonoBehaviour
         if (ganado) Ganaste_Gif.SetActive(false);
         else Perdiste_Gif.SetActive(false);
 
-        
         Oficina_Normal.SetActive(true);
         if(ContenedorCorazones) ContenedorCorazones.SetActive(true);
 
         ControladorVidas gestor = FindObjectOfType<ControladorVidas>();
-        if (gestor != null) {
-            gestor.ActualizarVisualVidas();
-        }
+        if (gestor != null) gestor.ActualizarVisualVidas();
         
-        
+        // Si aún tiene vidas, vuelve a decidir en 4 segundos
         if (ControladorVidas.vidasGlobales > 0) {
-            Invoke("IniciarCiclo", 4f); 
+            Invoke("DecidirSiguienteReto", 4f); 
         }
     }
 }
