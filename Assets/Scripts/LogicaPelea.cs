@@ -14,10 +14,10 @@ public class LogicaPelea : MonoBehaviour
 
     public void IniciarPelea()
     {
-        // 1. Despertamos el panel
+        
         gameObject.SetActive(true); 
 
-        // 2. Congelar movimiento (doble seguridad)
+        
         GameObject jugador = GameObject.FindWithTag("Player");
         if (jugador != null) 
         {
@@ -31,12 +31,12 @@ public class LogicaPelea : MonoBehaviour
         vidasRestantes = 3;
         ActualizarVidas();
 
-        // 3. Resetear elementos visuales para la animación
+        
         fotoMalote.SetActive(false);
         fotoMarshmallow.SetActive(false);
         cajaMinijuego.SetActive(false);
 
-        // 4. Secuencia cinemática
+        
         Invoke("ApareceVillano", 0.5f);
         Invoke("ApareceJugador", 1.5f);
         Invoke("LanzarPrimerMinijuego", 3.5f);

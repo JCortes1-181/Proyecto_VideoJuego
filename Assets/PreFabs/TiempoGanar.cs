@@ -17,7 +17,7 @@ public class GestionJuego : MonoBehaviour
             ganado = true;
             Debug.Log("¡Sobreviviste! Victoria.");
             
-            // Avisa al jugador que termine sin morir
+            
             FindObjectOfType<ControladorJugador>().TerminarMinijuegoSinMorir();
         }
     }

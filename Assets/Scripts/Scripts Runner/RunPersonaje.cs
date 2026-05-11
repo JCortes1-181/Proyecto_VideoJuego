@@ -11,7 +11,7 @@ public class Personaje : MonoBehaviour
     }
 
     void Update() {
-        // Detecta salto con Espacio o Flecha Arriba
+        
         if (estaEnSuelo && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
             rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
             estaEnSuelo = false;

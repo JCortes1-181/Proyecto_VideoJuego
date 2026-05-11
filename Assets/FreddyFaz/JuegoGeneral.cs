@@ -31,23 +31,23 @@ public class JuegoGeneral : MonoBehaviour
         MiniJuegoInterno.SetActive(false);
         if(ContenedorCorazones) ContenedorCorazones.SetActive(true);
         
-        // Actualizar corazones al empezar por si venimos de otra escena
+        
         ControladorVidas gestor = FindObjectOfType<ControladorVidas>();
         if (gestor != null) gestor.ActualizarVisualVidas();
 
         Invoke("DecidirSiguienteReto", 3f);
     }
 
-    // NUEVO: Lógica 50/50 entre Mario (Interno) o Skate (Escena aparte)
+    
     void DecidirSiguienteReto() {
         if (ControladorVidas.vidasGlobales <= 0) return;
 
         float suerte = Random.Range(0f, 100f);
 
         if (suerte < 50f) {
-            StartCoroutine(TransicionEntradaMario()); // Se queda en esta escena
+            StartCoroutine(TransicionEntradaMario()); 
         } else {
-            SceneManager.LoadScene("MinijuegoSkate"); // Carga la escena del Skate
+            SceneManager.LoadScene("MinijuegoSkate"); 
         }
     }
 
@@ -110,7 +110,7 @@ public class JuegoGeneral : MonoBehaviour
         ControladorVidas gestor = FindObjectOfType<ControladorVidas>();
         if (gestor != null) gestor.ActualizarVisualVidas();
         
-        // Si aún tiene vidas, vuelve a decidir en 4 segundos
+        
         if (ControladorVidas.vidasGlobales > 0) {
             Invoke("DecidirSiguienteReto", 4f); 
         }

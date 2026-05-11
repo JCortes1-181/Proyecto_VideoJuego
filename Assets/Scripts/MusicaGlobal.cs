@@ -6,7 +6,7 @@ public class MusicaControl : MonoBehaviour
 
     void Awake()
     {
-        // Si ya existe una música, destruye esta nueva de inmediato
+       
         if (instancia != null && instancia != this)
         {
             Debug.Log("Música duplicada detectada, destruyendo...");
@@ -14,7 +14,7 @@ public class MusicaControl : MonoBehaviour
             return;
         }
 
-        // Si es la primera vez que aparece, se vuelve persistente
+        
         instancia = this;
         DontDestroyOnLoad(this.gameObject);
         Debug.Log("Música global iniciada correctamente.");

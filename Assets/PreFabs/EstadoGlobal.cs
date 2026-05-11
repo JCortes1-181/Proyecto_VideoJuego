@@ -3,11 +3,11 @@ using UnityEngine;
 public class EstadoGlobal : MonoBehaviour
 {
     public static EstadoGlobal instancia;
-    public int vidas = 3; // Empiezas con 3 vidas
+    public int vidas = 3; 
 
     void Awake()
     {
-        // Esto hace que este objeto no se destruya al cambiar de escena
+        
         if (instancia == null)
         {
             instancia = this;
@@ -27,7 +27,7 @@ public class EstadoGlobal : MonoBehaviour
         if (vidas <= 0)
         {
             Debug.Log("Game Over Total");
-            // Aquí podrías mandar a una escena de Perdiste
+            
         }
     }
 }
