@@ -2,13 +2,14 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Suelo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Suelo
   - Water
   - UI
   - 
@@ -47,6 +48,8 @@ TagManager:
   - name: Layer 2
     uniqueID: 4250941897
     locked: 0
-  - name: Layer 3
+  - name: Suelo
     uniqueID: 4189426099
     locked: 0
+  m_RenderingLayers:
+  - Default

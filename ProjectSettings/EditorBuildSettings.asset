@@ -9,19 +9,19 @@ EditorBuildSettings:
     path: Assets/Scenes/menuPrincipal.unity
     guid: fc148af8ac32fd8429a4c84383331585
   - enabled: 1
-    path: Assets/Scenes/CasaInicio.unity
+    path: Assets/Scenes/Mapas/CasaInicio.unity
     guid: 96c23a7234e7bcf4b9775bde9fe6440a
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Mapas/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/MapaCompleto.unity
+    path: Assets/Scenes/Mapas/MapaCompleto.unity
     guid: 1fa31ed3c34c9d94c8e281c71eb67f5a
   - enabled: 1
     path: Assets/Scenes/FreddyFazbear.unity
     guid: a1ea592a6a2d58f4bb935c4ea9923ece
   - enabled: 1
-    path: Assets/Scenes/minijuegoSkate.unity
+    path: Assets/Scenes/Minijuegos-Fase1/minijuegoSkate.unity
     guid: 3e85f8c2037db5b409a72502d44c630c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
