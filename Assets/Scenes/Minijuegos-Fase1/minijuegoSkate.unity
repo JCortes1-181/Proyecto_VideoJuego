@@ -443,7 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 897272083}
-  - component: {fileID: 897272082}
+  - component: {fileID: 897272084}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -451,19 +451,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &897272082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897272081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 596fa55d4c7db874892a478718fa357e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParallaxController
-  parallaxSpeed: 0.07
 --- !u!4 &897272083
 Transform:
   m_ObjectHideFlags: 0
@@ -484,6 +471,20 @@ Transform:
   - {fileID: 1681624956}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &897272084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897272081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b038fe759c1df1344bd693c3c7d881a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParallaxSencillo
+  camara: {fileID: 1266932022}
+  velocidadParallax: 0.1
 --- !u!1 &1074572298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,6 +1372,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1104751743659704240, guid: 6f5ceed3bc13dc14e9604effa0f2e1db,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.34528297
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104751743659704240, guid: 6f5ceed3bc13dc14e9604effa0f2e1db,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.65699196
+      objectReference: {fileID: 0}
+    - target: {fileID: 1104751743659704240, guid: 6f5ceed3bc13dc14e9604effa0f2e1db,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4234908236401062320, guid: 6f5ceed3bc13dc14e9604effa0f2e1db,
         type: 3}
       propertyPath: m_Name
