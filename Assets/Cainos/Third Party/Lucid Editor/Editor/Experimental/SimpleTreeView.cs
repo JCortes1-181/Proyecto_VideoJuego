@@ -50,7 +50,6 @@ namespace Cainos.LucidEditor.Experimental
             }
             return base.GetCustomRowHeight(row, item);
         }
-
         protected override IList<TreeViewItem> BuildRows(TreeViewItem root)
         {
             var rows = GetRows() ?? new List<TreeViewItem>();

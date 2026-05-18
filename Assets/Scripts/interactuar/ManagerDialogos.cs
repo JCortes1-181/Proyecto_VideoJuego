@@ -1,27 +1,40 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class ManagerDialogos : MonoBehaviour 
 {
-   public GameObject panelDialogo;
+    public GameObject panelDialogo;
     public TextMeshProUGUI textoNombre; 
     public TextMeshProUGUI textoDialogo;
 
     private Queue<Frase> colaFrases;
-    private DialogoData datosActuales; // Guardamos los datos de la charla actual
+    private DialogoData datosActuales;
+    
+    // Usamos MonoBehaviour para que acepte cualquier script de movimiento
+    private MonoBehaviour scriptMovimiento;
 
     void Start() {
         colaFrases = new Queue<Frase>();
         panelDialogo.SetActive(false);
+        
+        // Buscamos cualquiera de los dos scripts que podrías estar usando
+        scriptMovimiento = FindAnyObjectByType<Moverse_Mapa2d>();
+        
+        if (scriptMovimiento == null) {
+            scriptMovimiento = FindAnyObjectByType<PlayerMovement>();
+        }
     }
 
     public void IniciarDialogo(DialogoData data) {
-        datosActuales = data; // Guardamos la referencia
+        datosActuales = data;
         panelDialogo.SetActive(true);
-        colaFrases.Clear();
+        
+        // Congelamos a Marsh
+        if (scriptMovimiento != null) scriptMovimiento.enabled = false;
 
+        colaFrases.Clear();
         foreach (Frase frase in data.frases) {
             colaFrases.Enqueue(frase);
         }
@@ -41,8 +54,10 @@ public class ManagerDialogos : MonoBehaviour
 
     void FinalizarInteraccion() {
         panelDialogo.SetActive(false);
+        
+        // Devolvemos el control a Marsh
+        if (scriptMovimiento != null) scriptMovimiento.enabled = true;
 
-        // Verificamos si los datos piden un cambio de escena
         if (datosActuales != null && datosActuales.cambiarEscenaAlFinal) {
             if (!string.IsNullOrEmpty(datosActuales.nombreEscenaDestino)) {
                 SceneManager.LoadScene(datosActuales.nombreEscenaDestino);

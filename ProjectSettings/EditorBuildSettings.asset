@@ -27,13 +27,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Minijuegos-Fase1/MinijuegoMatar.unity
     guid: 36bbff51311bc0e46bebd31b7c632e6e
   - enabled: 1
-    path: Assets/Scenes/Minijuegos-Fase1/Minijuego_recolectar.unity
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Minijuego_recolectar.unity
     guid: 114f9fc80160f9d448a87808b2d0d40c
   - enabled: 1
     path: Assets/Scenes/Minijuegos-Fase1/minijuego_espacio.unity
     guid: 9c0c0aa45af82714eb93f106c62bbdd1
   - enabled: 1
-    path: Assets/Scenes/Minijuegos-Fase1/MinijuegoSC.unity
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/MinijuegoSC.unity
     guid: 2c39421ec217efd478c52d50b43e0eb4
+  - enabled: 1
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Minijuego_Chat.unity
+    guid: adc21244095ac684cb10118b421695bf
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
