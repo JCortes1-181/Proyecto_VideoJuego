@@ -8,41 +8,38 @@ public class ControladorVidas : MonoBehaviour
     public GameObject[] corazonesUI;   
     public GameObject objetoJumpscare; 
     public AudioSource sonidoGrito;   
-    public AudioSource musicaDeFondo;
 
-   void Start() 
-    {
-        // Esto refresca los corazones apenas entras a la oficina
+    void Start() {
         ActualizarVisualVidas();
     }
 
     public void ActualizarVisualVidas() {
-        // ... (tu lógica de corazones) ...
+        // Desactiva los corazones según las vidas restantes
+        for (int i = 0; i < corazonesUI.Length; i++) {
+            if (corazonesUI[i] != null) {
+                corazonesUI[i].SetActive(i < vidasGlobales);
+            }
+        }
 
         if (vidasGlobales <= 0) {
-    // Buscamos al gestor de música y lo apagamos
-    if (MusicaControl.instancia != null) {
-    MusicaControl.instancia.DetenerMusica();
-}
-    StartCoroutine(SecuenciaJumpscare());
-}
+            if (MusicaControl.instancia != null) {
+                MusicaControl.instancia.DetenerMusica();
+            }
+            StartCoroutine(SecuenciaJumpscare());
+        }
     }
 
     IEnumerator SecuenciaJumpscare() {
-        
         if (objetoJumpscare != null) objetoJumpscare.SetActive(true); 
-
-        
-        if (sonidoGrito != null) sonidoGrito.gameObject.SetActive(true);
-
-        
-        yield return new WaitForEndOfFrame();
-
-        
-        if (sonidoGrito != null) sonidoGrito.Play();
+        if (sonidoGrito != null) {
+            sonidoGrito.gameObject.SetActive(true);
+            sonidoGrito.Play();
+        }
 
         yield return new WaitForSeconds(3f);
+        
+        // Reiniciamos todo para volver a empezar
         vidasGlobales = 4;
-        SceneManager.LoadScene("SampleScene"); 
+        SceneManager.LoadScene("FreddyFazbear"); 
     }
 }
