@@ -136,6 +136,9 @@ Assets/
    Obstaculo.cs
    RunPersonaje.cs
   Script_MinijuegoVN/MinijuegoCita.cs
+  Scrip_Cueva/
+   enemyController.cs
+   Moverse_Cueva.cs
   SeguirObjetivo.cs
  TextMesh Pro/Examples & Extras/Scripts/
   Benchmark01.cs
