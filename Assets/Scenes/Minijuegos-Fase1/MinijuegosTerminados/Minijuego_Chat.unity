@@ -145,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 373407941}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -184.64, y: 79.57, z: 719.9999}
+  m_LocalPosition: {x: -194, y: 82, z: 719.9999}
   m_LocalScale: {x: 6.459391, y: 7.908207, z: 57.599987}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -319,8 +319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000030518}
-  m_SizeDelta: {x: 962.8, y: 387.4}
+  m_AnchoredPosition: {x: -0.74, y: -3.65}
+  m_SizeDelta: {x: 1008.08, y: 421}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839436476
 MonoBehaviour:
@@ -528,10 +528,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 36
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 10
   m_fontSizeMax: 50
   m_fontStyle: 0
@@ -597,7 +597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -126}
+  m_AnchoredPosition: {x: 0, y: -148}
   m_SizeDelta: {x: 310.75, y: 47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1370974727
@@ -845,6 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorChat
   cuadroTextoSpam: {fileID: 1317515590}
   letrasNecesarias: 40
+  tiempoLimite: 10
   scriptEfectos: {fileID: 1747657113}
   scriptVibracion: {fileID: 1370974731}
 --- !u!4 &1747657115
