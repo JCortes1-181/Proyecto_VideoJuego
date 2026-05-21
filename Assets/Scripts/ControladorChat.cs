@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ControladorChat : MonoBehaviour
@@ -9,6 +10,10 @@ public class ControladorChat : MonoBehaviour
 
     [Header("Configuración del Minijuego")]
     public int letrasNecesarias = 40;
+    // --- NUEVA LÍNEA: Tiempo límite ---
+    public float tiempoLimite = 10f; 
+    private float cronometro = 0f;
+    // ----------------------------------
 
     [Header("Conexión con Efectos Finales")]
     public EfectosFinalChat scriptEfectos;
@@ -28,11 +33,22 @@ public class ControladorChat : MonoBehaviour
         {
             cuadroTextoSpam.text = "";
         }
+        // Inicializamos el cronómetro
+        cronometro = tiempoLimite;
     }
 
     void Update()
     {
         if (juegoTerminado) return;
+
+        // --- LÓGICA DEL TEMPORIZADOR ---
+        cronometro -= Time.deltaTime;
+        if (cronometro <= 0)
+        {
+            TerminarJuego(false); // Pierde por tiempo
+            return;
+        }
+        // -------------------------------
 
         if (Input.anyKeyDown && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
         {
@@ -71,6 +87,7 @@ public class ControladorChat : MonoBehaviour
             {
                 scriptEfectos.ActivarVictoria();
             }
+            SceneManager.LoadScene("FreddyFazbear"); // Solo vuelve
         }
         else
         {
@@ -79,6 +96,10 @@ public class ControladorChat : MonoBehaviour
             {
                 scriptEfectos.ActivarDerrota();
             }
+            
+            // Si pierde: Resta vida y vuelve a la oficina
+            ControladorVidas.vidasGlobales--; 
+            SceneManager.LoadScene("FreddyFazbear");
         }
     }
 }
