@@ -4,27 +4,97 @@ public class Moverse_Cueva : MonoBehaviour
 {
     public float velocidad = 5f;
     public Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Rigidbody2D rb;
+    private float movimientoX;
+
+
+    public float fuerzaSalto = 10f;
+    public Transform controladorSuelo;   
+    public Vector2 dimensionesCajaSuelo; 
+    public LayerMask queEsSuelo;        
+    private bool enSuelo;
+
+    public Transform controladorAtaque;   
+    public float radioAtaque = 0.5f;      
+    public LayerMask queEsEnemigo;       
     void Start()
     {
-        
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-      float velocidadX= Input.GetAxis("Horizontal")*Time.deltaTime*velocidad;
-      animator.SetFloat("Movement", velocidadX*velocidad);
-      if (velocidadX < 0)
+        movimientoX = Input.GetAxisRaw("Horizontal"); 
+
+        if (animator != null)
         {
-            transform.localScale= new Vector3(-1,1,1);
+            animator.SetFloat("Movement", Mathf.Abs(movimientoX));
         }
-        if (velocidadX > 0)
+
+        if (movimientoX < 0)
         {
-            transform.localScale=new Vector3(1,1,1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
-      Vector3 posicion = transform.position;
-      transform.position=new Vector3(velocidadX + posicion.x,posicion.y, posicion.z);  
+        else if (movimientoX > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        enSuelo = Physics2D.OverlapBox(controladorSuelo.position, dimensionesCajaSuelo, 0f, queEsSuelo);
+
+        if (Input.GetButtonDown("Jump") && enSuelo)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
+        {
+            Atacar();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(movimientoX * velocidad, rb.linearVelocity.y);
+    }
+
+    private void Atacar()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack"); 
+        }
+
+        StartCoroutine(EsperarParaHacerDanio());
+    }
+
+    System.Collections.IEnumerator EsperarParaHacerDanio()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        Collider2D[] enemigosGolpeados = Physics2D.OverlapCircleAll(controladorAtaque.position, radioAtaque, queEsEnemigo);
+
+        foreach (Collider2D enemigo in enemigosGolpeados)
+        {
+            if (enemigo.TryGetComponent<enemyController>(out enemyController scriptEnemigo))
+            {
+                scriptEnemigo.RecibirDanio();
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (controladorSuelo != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(controladorSuelo.position, dimensionesCajaSuelo);
+        }
+        if (controladorAtaque != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(controladorAtaque.position, radioAtaque);
+        }
     }
 }
-
