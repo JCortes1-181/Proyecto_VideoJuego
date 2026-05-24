@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Mapas/FreddyFazbear.unity
     guid: a1ea592a6a2d58f4bb935c4ea9923ece
   - enabled: 1
-    path: Assets/Scenes/Minijuegos-Fase1/minijuegoSkate.unity
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/minijuegoSkate.unity
     guid: 3e85f8c2037db5b409a72502d44c630c
   - enabled: 1
     path: Assets/Scenes/Minijuegos-Fase1/MinijuegoMatar.unity
