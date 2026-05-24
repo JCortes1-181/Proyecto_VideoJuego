@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::enemyController
   player: {fileID: 475457422}
-  speed: 8
+  speed: 200
   animator: {fileID: 135029663}
   detectionRadius: 10.12
   attackRadius: 2
@@ -1146,7 +1146,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3125, y: 2.375}
+    oldSize: {x: 2.625, y: 0.8125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1619,12 +1619,12 @@ PrefabInstance:
     - target: {fileID: 4026829297698695354, guid: b23327dc431683541955391444318b7a,
         type: 3}
       propertyPath: m_Size.x
-      value: 1.4844933
+      value: 0.89061546
       objectReference: {fileID: 0}
     - target: {fileID: 4026829297698695354, guid: b23327dc431683541955391444318b7a,
         type: 3}
       propertyPath: m_Offset.x
-      value: -6.7401304
+      value: -6.4431915
       objectReference: {fileID: 0}
     - target: {fileID: 5696092288788170251, guid: b23327dc431683541955391444318b7a,
         type: 3}

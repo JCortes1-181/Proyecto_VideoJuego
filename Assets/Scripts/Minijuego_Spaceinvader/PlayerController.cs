@@ -2,33 +2,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
-   [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 5f;
 
-   /* [SerializeField] private Sprite leftShip;
-    [SerializeField] private Sprite rightShip;
-    [SerializeField] private Sprite centerShip;
-*/
+    [Header("Disparo")]
+    public GameObject balaPrefab; 
+    public Transform puntoDisparo; 
 
     private Rigidbody2D rb2d;
-    private SpriteRenderer sr;
-
-   private Vector2 movement;
+    private Vector2 movement;
 
     private void Awake()
     {
-        rb2d=GetComponent<Rigidbody2D>();
-        sr=GetComponent<SpriteRenderer>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-      movement.x=Input.GetAxis("Horizontal"); 
-      
+        movement.x = Input.GetAxis("Horizontal"); 
+
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Disparar();
+        }
     }
 
     private void FixedUpdate()
     {
-        rb2d.MovePosition(rb2d.position+movement*speed*Time.fixedDeltaTime);
+        rb2d.MovePosition(rb2d.position + movement * speed * Time.fixedDeltaTime);
+    }
+
+    void Disparar()
+    {
+        
+        Instantiate(balaPrefab, puntoDisparo.position, Quaternion.identity);
     }
 }

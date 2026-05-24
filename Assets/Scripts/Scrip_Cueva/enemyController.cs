@@ -66,7 +66,7 @@ public class enemyController : MonoBehaviour
             animator.SetTrigger("Attack"); 
         }
 
-        yield return new WaitForSeconds(0.65f); 
+        yield return new WaitForSeconds(0.35f); 
 
         if (!estaMuerto && player != null)
         {
@@ -74,12 +74,18 @@ public class enemyController : MonoBehaviour
             
             if (distanciaFinal <= attackRadius)
             {
-                Debug.Log("¡El golpe conectó justamente!");
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            else
-            {
-                Debug.Log("¡Esquivado limpiamente!");
+                Moverse_Cueva scriptJugador = player.GetComponent<Moverse_Cueva>();
+                
+                if (scriptJugador != null && scriptJugador.enabled == true)
+                {
+                    Debug.Log("¡El golpe conectó justamente!");
+                    
+                    scriptJugador.Morir();
+                    
+                    scriptJugador.enabled = false;
+                    
+                    StartCoroutine(ReiniciarNivel());
+                }
             }
         }
 
@@ -128,5 +134,12 @@ public class enemyController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
+
+    System.Collections.IEnumerator ReiniciarNivel()
+    {
+        yield return new WaitForSeconds(1.5f); 
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

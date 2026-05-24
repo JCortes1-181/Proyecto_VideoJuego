@@ -150,7 +150,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -191,12 +191,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 48
-        width: 29
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 2
+        y: 49
+        width: 27
+        height: 28
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -213,12 +213,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 64
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 25
+        y: 65
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -235,12 +235,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 66
-        width: 8
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 67
+        width: 6
+        height: 4
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -257,12 +257,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_3
       rect:
         serializedVersion: 2
-        x: 34
-        y: 66
-        width: 14
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 35
+        y: 67
+        width: 13
+        height: 10
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -279,12 +279,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_4
       rect:
         serializedVersion: 2
-        x: 25
-        y: 57
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 26
+        y: 58
+        width: 4
+        height: 4
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -301,12 +301,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 48
-        width: 8
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 49
+        width: 6
+        height: 14
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -323,12 +323,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_6
       rect:
         serializedVersion: 2
-        x: 41
-        y: 57
-        width: 6
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 42
+        y: 58
+        width: 4
+        height: 5
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -345,12 +345,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_7
       rect:
         serializedVersion: 2
-        x: 1
-        y: 31
-        width: 16
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 2
+        y: 32
+        width: 14
+        height: 23
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -367,12 +367,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_8
       rect:
         serializedVersion: 2
-        x: 16
-        y: 40
-        width: 8
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 17
+        y: 41
+        width: 6
+        height: 14
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -389,12 +389,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_9
       rect:
         serializedVersion: 2
-        x: 24
-        y: 40
-        width: 8
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 25
+        y: 41
+        width: 6
+        height: 12
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -411,12 +411,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_10
       rect:
         serializedVersion: 2
-        x: 41
-        y: 49
-        width: 6
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 42
+        y: 50
+        width: 4
+        height: 5
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -433,12 +433,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 33
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -455,12 +455,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_12
       rect:
         serializedVersion: 2
-        x: 8
-        y: 24
-        width: 17
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 9
+        y: 25
+        width: 15
+        height: 15
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -477,12 +477,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_13
       rect:
         serializedVersion: 2
-        x: 15
-        y: 23
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 16
+        y: 24
+        width: 16
+        height: 16
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -499,12 +499,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_14
       rect:
         serializedVersion: 2
-        x: 33
-        y: 33
-        width: 7
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 34
+        y: 34
+        width: 5
+        height: 11
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -521,12 +521,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_15
       rect:
         serializedVersion: 2
-        x: 41
-        y: 33
-        width: 7
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 42
+        y: 34
+        width: 5
+        height: 13
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -543,12 +543,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 25
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -565,12 +565,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_17
       rect:
         serializedVersion: 2
-        x: 0
-        y: 15
-        width: 17
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 25
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -587,12 +587,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_18
       rect:
         serializedVersion: 2
-        x: 17
-        y: 17
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 41
+        y: 25
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -609,12 +609,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_19
       rect:
         serializedVersion: 2
-        x: 23
-        y: 15
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 16
+        width: 16
+        height: 8
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -631,12 +631,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_20
       rect:
         serializedVersion: 2
-        x: 32
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 18
+        y: 18
+        width: 5
+        height: 5
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -653,12 +653,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_21
       rect:
         serializedVersion: 2
-        x: 32
+        x: 24
         y: 16
         width: 8
         height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -675,12 +675,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_22
       rect:
         serializedVersion: 2
-        x: 40
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 17
+        width: 6
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -697,12 +697,12 @@ TextureImporter:
       name: SpaceShooterAssetPack_Projectiles_23
       rect:
         serializedVersion: 2
-        x: 40
-        y: 16
-        width: 7
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 41
+        y: 17
+        width: 5
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -720,11 +720,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7
+        y: 8
         width: 48
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 8
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -742,11 +742,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 1
         width: 48
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 6
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -763,7 +763,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: af1f148e5eb6e6d40ada61b5647ba9d3
     internalID: 0
     vertices: []
     indices: 
@@ -771,7 +771,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceOnImport
+        value: True
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":1.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":1,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       SpaceShooterAssetPack_Projectiles_0: 4218205773614938160
       SpaceShooterAssetPack_Projectiles_1: 8177804349947669652

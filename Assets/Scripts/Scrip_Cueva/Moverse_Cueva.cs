@@ -7,6 +7,8 @@ public class Moverse_Cueva : MonoBehaviour
     private Rigidbody2D rb;
     private float movimientoX;
 
+    private bool estoyMuerto = false;
+
 
     public float fuerzaSalto = 10f;
     public Transform controladorSuelo;   
@@ -25,6 +27,8 @@ public class Moverse_Cueva : MonoBehaviour
 
     void Update()
     {
+        if (estoyMuerto) return;
+
         movimientoX = Input.GetAxisRaw("Horizontal"); 
 
         if (animator != null)
@@ -56,6 +60,7 @@ public class Moverse_Cueva : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (estoyMuerto) return;
         rb.linearVelocity = new Vector2(movimientoX * velocidad, rb.linearVelocity.y);
     }
 
@@ -96,5 +101,37 @@ public class Moverse_Cueva : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(controladorAtaque.position, radioAtaque);
         }
+    }
+
+    public void Morir()
+    {
+        estoyMuerto = true;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.gravityScale = 0f; 
+            rb.simulated = false; 
+        }
+
+        if (TryGetComponent<Collider2D>(out Collider2D col))
+        {
+            col.enabled = false;
+        }
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+
+        StartCoroutine(AcomodarCuerpoEnElSuelo());
+    }
+
+    System.Collections.IEnumerator AcomodarCuerpoEnElSuelo()
+    {
+        yield return new WaitForSeconds(0.4f); 
+
+
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
     }
 }
