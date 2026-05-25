@@ -17,5 +17,5 @@ MonoBehaviour:
     texto: 'Vienes por mas '
     retrato: {fileID: -5472576822522193238, guid: ead564cbf8cec3544a0dbbb86bb7a6a4,
       type: 3}
-  cambiarEscenaAlFinal: 0
-  nombreEscenaDestino: 
+  cambiarEscenaAlFinal: 1
+  nombreEscenaDestino: FreddyFazbear
