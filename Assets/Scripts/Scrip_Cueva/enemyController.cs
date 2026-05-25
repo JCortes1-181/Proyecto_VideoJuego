@@ -17,7 +17,7 @@ public class enemyController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private bool yaAtaco = false; 
-    private bool estaMuerto = false; 
+    public bool estaMuerto = false; 
     private bool atacandoEnEsteInstante = false;
 
     void Start()
@@ -83,8 +83,10 @@ public class enemyController : MonoBehaviour
                     scriptJugador.Morir();
                     
                     scriptJugador.enabled = false;
+
+                    movement = Vector2.zero; 
+                    this.enabled = false;
                     
-                    StartCoroutine(ReiniciarNivel());
                 }
             }
         }
@@ -136,10 +138,4 @@ public class enemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 
-    System.Collections.IEnumerator ReiniciarNivel()
-    {
-        yield return new WaitForSeconds(1.5f); 
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }
