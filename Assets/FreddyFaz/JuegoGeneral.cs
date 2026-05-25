@@ -67,7 +67,7 @@ public class JuegoGeneral : MonoBehaviour
     void DecidirSiguienteReto() {
         if (ControladorVidas.vidasGlobales <= 0) return;
 
-        string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC" };
+        string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC", "minijuego_espacio","MinijuegoMatar" };
         int indiceAleatorio = Random.Range(0, minijuegos.Length);
         string escenaElegida = minijuegos[indiceAleatorio];
 
