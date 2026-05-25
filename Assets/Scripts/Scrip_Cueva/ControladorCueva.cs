@@ -10,12 +10,24 @@ public class ControladorCueva : MonoBehaviour
 
     public enemyController scriptEnemigo; 
 
+    // --- NUEVO: SISTEMA DE TIEMPO ---
+    public float tiempoRestante = 5f; 
+
     void Update()
     {
-        
-        if (!juegoTerminado && scriptEnemigo != null && scriptEnemigo.estaMuerto) 
+        if (juegoTerminado) return;
+
+        // 1. Condición de Victoria: Enemigo muere
+        if (scriptEnemigo != null && scriptEnemigo.estaMuerto) 
         {
              Finalizar(true);
+        }
+
+        // 2. Condición de Derrota: El tiempo se agota
+        tiempoRestante -= Time.deltaTime;
+        if (tiempoRestante <= 0)
+        {
+            Finalizar(false);
         }
     }
 
@@ -36,8 +48,6 @@ public class ControladorCueva : MonoBehaviour
         else
         {
             if (gifPerdiste) gifPerdiste.SetActive(true);
-            
-            
             ControladorVidas.vidasGlobales--; 
         }
 

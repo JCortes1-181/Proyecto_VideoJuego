@@ -7,9 +7,7 @@ public class Moverse_Cueva : MonoBehaviour
     public Animator animator;
     private Rigidbody2D rb;
     private float movimientoX;
-
     private bool estoyMuerto = false;
-
 
     public float fuerzaSalto = 10f;
     public Transform controladorSuelo;   
@@ -21,11 +19,12 @@ public class Moverse_Cueva : MonoBehaviour
     public float radioAtaque = 0.5f;      
     public LayerMask queEsEnemigo;   
 
-    public AudioSource audioSource; // Arrastra aquí el componente AudioSource
+    // --- NUEVO: SONIDO DE ATAQUE ---
+    public AudioSource audioSource; 
     public AudioClip sonidoAtaque;    
+
     void Start()
     {
-
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -40,14 +39,8 @@ public class Moverse_Cueva : MonoBehaviour
             animator.SetFloat("Movement", Mathf.Abs(movimientoX));
         }
 
-        if (movimientoX < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (movimientoX > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
+        if (movimientoX < 0) transform.localScale = new Vector3(-1, 1, 1);
+        else if (movimientoX > 0) transform.localScale = new Vector3(1, 1, 1);
 
         enSuelo = Physics2D.OverlapBox(controladorSuelo.position, dimensionesCajaSuelo, 0f, queEsSuelo);
 
@@ -56,39 +49,26 @@ public class Moverse_Cueva : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
+        // ATAQUE
+        if (Input.GetButtonDown("Fire1")) 
         {
             Atacar();
         }
     }
 
-    void FixedUpdate()
-    {
-        if (estoyMuerto) return;
-        rb.linearVelocity = new Vector2(movimientoX * velocidad, rb.linearVelocity.y);
-    }
-
     private void Atacar()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger("Attack"); 
-        }
+        if (animator != null) animator.SetTrigger("Attack");
+
+        // REPRODUCIR SONIDO SI ESTÁ CONFIGURADO
         if (audioSource != null && sonidoAtaque != null)
         {
             audioSource.PlayOneShot(sonidoAtaque);
         }
 
-        StartCoroutine(EsperarParaHacerDanio());
-    }
+        Collider2D[] objetosGolpeados = Physics2D.OverlapCircleAll(controladorAtaque.position, radioAtaque, queEsEnemigo);
 
-    System.Collections.IEnumerator EsperarParaHacerDanio()
-    {
-        yield return new WaitForSeconds(0.15f);
-
-        Collider2D[] enemigosGolpeados = Physics2D.OverlapCircleAll(controladorAtaque.position, radioAtaque, queEsEnemigo);
-
-        foreach (Collider2D enemigo in enemigosGolpeados)
+        foreach (Collider2D enemigo in objetosGolpeados)
         {
             if (enemigo.TryGetComponent<enemyController>(out enemyController scriptEnemigo))
             {
@@ -97,54 +77,24 @@ public class Moverse_Cueva : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void FixedUpdate()
     {
-        if (controladorSuelo != null)
+        if (!estoyMuerto)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(controladorSuelo.position, dimensionesCajaSuelo);
-        }
-        if (controladorAtaque != null)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(controladorAtaque.position, radioAtaque);
+            rb.linearVelocity = new Vector2(movimientoX * velocidad, rb.linearVelocity.y);
         }
     }
 
     public void Morir()
     {
         estoyMuerto = true;
-
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
             rb.gravityScale = 0f; 
             rb.simulated = false; 
         }
-
-        if (TryGetComponent<Collider2D>(out Collider2D col))
-        {
-            col.enabled = false;
-        }
-
-        if (animator != null)
-        {
-            animator.SetTrigger("Die");
-        }
-
-        StartCoroutine(AcomodarCuerpoEnElSuelo());
-    
-        if (controladorJuego != null)
-        {
-            controladorJuego.Finalizar(false);
-        }
-    }
-
-    System.Collections.IEnumerator AcomodarCuerpoEnElSuelo()
-    {
-        yield return new WaitForSeconds(0.4f); 
-
-
-        transform.position = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
+        if (TryGetComponent<Collider2D>(out Collider2D col)) col.enabled = false;
+        if (animator != null) animator.SetTrigger("Die");
     }
 }

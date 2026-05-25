@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9039f2818a0f01447a39aa1ff73d15a1, type: 3}
-  m_Name: Dialogo_Npc_Completo
+  m_Name: post_game
   m_EditorClassIdentifier: Assembly-CSharp::DialogoData
   frases:
-  - nombre: Marsh
-    texto: Hola como estai
-  - nombre: Pleto
-    texto: 'no se me ocurre que poner '
-  - nombre: marsh
-    texto: 'son las 4Am pipipipipipipipi '
-  - nombre: Pleto
-    texto: 'depositenme a  mi sp '
-  cambiarEscenaAlFinal: 1
-  nombreEscenaDestino: FreddyFazbear
+  - nombre: pleto
+    texto: 'Vienes por mas '
+    retrato: {fileID: -5472576822522193238, guid: ead564cbf8cec3544a0dbbb86bb7a6a4,
+      type: 3}
+  cambiarEscenaAlFinal: 0
+  nombreEscenaDestino: 

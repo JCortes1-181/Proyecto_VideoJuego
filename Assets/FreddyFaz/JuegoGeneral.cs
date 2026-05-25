@@ -15,40 +15,67 @@ public class JuegoGeneral : MonoBehaviour
     
     [Header("Ajustes de Juego")]
     public static int minijuegosCompletados = 0; 
-    public int totalMinijuegosParaGanar = 6; // Ajustado a 6 según tu inspector
+    public int totalMinijuegosParaGanar = 6;
 
     [Header("Paneles de Fin de Juego")]
     public GameObject panelVictoria;
     public GameObject panelGameOver;
 
-    void Start() {
-        // Aseguramos que la UI principal esté visible al empezar
-        if(ContenedorCorazones) ContenedorCorazones.SetActive(true);
-        if(textoContadorMinijuegos) textoContadorMinijuegos.gameObject.SetActive(true);
-        
-        ActualizarTextoProgreso();
+    private static List<string> bolsaMinijuegos = new List<string>();
+    private string[] listaMaestra = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC", "minijuego_espacio", "MinijuegoMatar", "MinijuegoSkate" }; 
 
-        // Refrescamos las vidas visuales al entrar a la oficina
+    void Start() {
+        StopAllCoroutines();
+
+        if (bolsaMinijuegos == null || bolsaMinijuegos.Count == 0) {
+            bolsaMinijuegos = new List<string>();
+            bolsaMinijuegos.AddRange(listaMaestra);
+        }
+
+        // Encendemos la UI al empezar
+        if(ContenedorCorazones != null) ContenedorCorazones.SetActive(true);
+        if(textoContadorMinijuegos != null) {
+            textoContadorMinijuegos.gameObject.SetActive(true);
+            ActualizarTextoProgreso();
+        }
+
         ControladorVidas gestor = Object.FindFirstObjectByType<ControladorVidas>();
         if (gestor != null) gestor.ActualizarVisualVidas();
 
-        // Verificamos si ya se alcanzó la meta
         if (minijuegosCompletados >= totalMinijuegosParaGanar) {
-            GanarJuegoCompleto();
-            return;
-        }
-
-        // Si no hemos ganado ni perdido, esperamos para el siguiente minijuego
-        if (ControladorVidas.vidasGlobales > 0) {
-            Invoke("DecidirSiguienteReto", 3f);
+            Ganaste();
+        } else {
+            Invoke("DecidirSiguienteReto", 2.5f);
         }
     }
 
-    void Update() {
-        // Verificación constante por si las vidas llegan a 0
-        if (ControladorVidas.vidasGlobales <= 0) {
-            OcultarUIProgreso();
+    // --- NUEVA FUNCIÓN PARA LIMPIAR LA PANTALLA ---
+    void OcultarUIInGame() {
+        if (textoContadorMinijuegos != null) textoContadorMinijuegos.gameObject.SetActive(false);
+        if (ContenedorCorazones != null) ContenedorCorazones.SetActive(false);
+    }
+
+    void DecidirSiguienteReto() {
+        if (this == null || ControladorVidas.vidasGlobales <= 0) {
+            // Si el jugador perdió, ocultamos el contador antes de mostrar el GameOver
+            OcultarUIInGame();
+            return;
         }
+
+        if (bolsaMinijuegos.Count == 0) bolsaMinijuegos.AddRange(listaMaestra);
+
+        int indiceAleatorio = Random.Range(0, bolsaMinijuegos.Count);
+        string escenaElegida = bolsaMinijuegos[indiceAleatorio];
+        bolsaMinijuegos.RemoveAt(indiceAleatorio);
+
+        minijuegosCompletados++;
+        StartCoroutine(TransicionAMinijuego(escenaElegida));
+    }
+
+    IEnumerator TransicionAMinijuego(string nombreEscena) {
+        if(Estatica_Efecto != null) Estatica_Efecto.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        SceneManager.LoadScene(nombreEscena);
     }
 
     void ActualizarTextoProgreso() {
@@ -57,39 +84,9 @@ public class JuegoGeneral : MonoBehaviour
         }
     }
 
-    // Función nueva para limpiar la pantalla cuando termina el juego
-    void OcultarUIProgreso() {
-        if (textoContadorMinijuegos != null) {
-            textoContadorMinijuegos.gameObject.SetActive(false);
-        }
-    }
-
-    void DecidirSiguienteReto() {
-        if (ControladorVidas.vidasGlobales <= 0) return;
-
-        string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC", "minijuego_espacio","MinijuegoMatar" };
-        int indiceAleatorio = Random.Range(0, minijuegos.Length);
-        string escenaElegida = minijuegos[indiceAleatorio];
-
-        minijuegosCompletados++;
-
-        StartCoroutine(TransicionAMinijuego(escenaElegida));
-    }
-
-    IEnumerator TransicionAMinijuego(string nombreEscena) {
-        if(Estatica_Efecto) Estatica_Efecto.SetActive(true);
-        yield return new WaitForSeconds(0.8f);
-        SceneManager.LoadScene(nombreEscena);
-    }
-
-    void GanarJuegoCompleto() {
-        OcultarUIProgreso();
-        if (panelVictoria != null) {
-            panelVictoria.SetActive(true);
-        } else {
-            // Si no hay panel, vuelve al inicio
-            minijuegosCompletados = 0;
-            SceneManager.LoadScene("SampleScene"); 
-        }
+    void Ganaste() {
+        OcultarUIInGame(); // Apagamos contador y corazones al ganar
+        if(panelVictoria != null) panelVictoria.SetActive(true);
+        if(bolsaMinijuegos != null) bolsaMinijuegos.Clear(); 
     }
 }
