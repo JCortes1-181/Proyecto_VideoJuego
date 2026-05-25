@@ -11,49 +11,66 @@ public class JuegoGeneral : MonoBehaviour
     public GameObject ContenedorCorazones; 
 
     [Header("UI de Progreso")]
-    public TextMeshProUGUI textoContadorMinijuegos; // El nuevo texto para "1/10"
+    public TextMeshProUGUI textoContadorMinijuegos; 
     
     [Header("Ajustes de Juego")]
-    public static int minijuegosCompletados = 0; // Variable que persiste entre escenas
-    public int totalMinijuegosParaGanar = 10;
+    public static int minijuegosCompletados = 0; 
+    public int totalMinijuegosParaGanar = 6; // Ajustado a 6 según tu inspector
+
+    [Header("Paneles de Fin de Juego")]
+    public GameObject panelVictoria;
+    public GameObject panelGameOver;
 
     void Start() {
+        // Aseguramos que la UI principal esté visible al empezar
         if(ContenedorCorazones) ContenedorCorazones.SetActive(true);
+        if(textoContadorMinijuegos) textoContadorMinijuegos.gameObject.SetActive(true);
         
-        // Actualizamos el texto de progreso (ej: "Minijuegos: 1 / 10")
         ActualizarTextoProgreso();
 
-        // Refrescamos las vidas visuales
+        // Refrescamos las vidas visuales al entrar a la oficina
         ControladorVidas gestor = Object.FindFirstObjectByType<ControladorVidas>();
         if (gestor != null) gestor.ActualizarVisualVidas();
 
-        // Verificamos si ya ganamos el juego completo
+        // Verificamos si ya se alcanzó la meta
         if (minijuegosCompletados >= totalMinijuegosParaGanar) {
             GanarJuegoCompleto();
             return;
         }
 
-        Invoke("DecidirSiguienteReto", 3f);
+        // Si no hemos ganado ni perdido, esperamos para el siguiente minijuego
+        if (ControladorVidas.vidasGlobales > 0) {
+            Invoke("DecidirSiguienteReto", 3f);
+        }
+    }
+
+    void Update() {
+        // Verificación constante por si las vidas llegan a 0
+        if (ControladorVidas.vidasGlobales <= 0) {
+            OcultarUIProgreso();
+        }
     }
 
     void ActualizarTextoProgreso() {
         if (textoContadorMinijuegos != null) {
-            // Sumamos 1 para que el jugador vea "1/10" en lugar de "0/10" al empezar
-            textoContadorMinijuegos.text = "Ronda: " + (minijuegosCompletados + 1) + " / " + totalMinijuegosParaGanar;
+            textoContadorMinijuegos.text = "RONDA: " + (minijuegosCompletados + 1) + " / " + totalMinijuegosParaGanar;
+        }
+    }
+
+    // Función nueva para limpiar la pantalla cuando termina el juego
+    void OcultarUIProgreso() {
+        if (textoContadorMinijuegos != null) {
+            textoContadorMinijuegos.gameObject.SetActive(false);
         }
     }
 
     void DecidirSiguienteReto() {
         if (ControladorVidas.vidasGlobales <= 0) return;
 
-        // Aumentamos el contador: cada vez que entramos a la oficina tras un reto, cuenta como uno más
-        // (Nota: minijuegosCompletados se aumenta antes de lanzar el siguiente)
-
         string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC" };
         int indiceAleatorio = Random.Range(0, minijuegos.Length);
         string escenaElegida = minijuegos[indiceAleatorio];
 
-        // Aumentamos el contador global antes de ir al minijuego
         minijuegosCompletados++;
 
         StartCoroutine(TransicionAMinijuego(escenaElegida));
@@ -66,9 +83,13 @@ public class JuegoGeneral : MonoBehaviour
     }
 
     void GanarJuegoCompleto() {
-        // Reiniciamos el contador para la próxima vez que el usuario juegue
-        minijuegosCompletados = 0;
-        // Te devuelve a la SampleScene (Menú o inicio)
-        SceneManager.LoadScene("SampleScene"); 
+        OcultarUIProgreso();
+        if (panelVictoria != null) {
+            panelVictoria.SetActive(true);
+        } else {
+            // Si no hay panel, vuelve al inicio
+            minijuegosCompletados = 0;
+            SceneManager.LoadScene("SampleScene"); 
+        }
     }
 }

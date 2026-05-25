@@ -1,27 +1,32 @@
 using UnityEngine;
 using TMPro;
+using System.Collections; // Necesario para el efecto de escritura
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Necesario para la imagen del retrato
 
 public class ManagerDialogos : MonoBehaviour 
 {
     public GameObject panelDialogo;
     public TextMeshProUGUI textoNombre; 
     public TextMeshProUGUI textoDialogo;
+    public Image imagenRetrato; // NUEVO: Arrastra aquí el objeto Image del retrato
+
+    [Header("Ajustes de Texto")]
+    public float velocidadEscritura = 0.02f; // Tiempo entre letras
 
     private Queue<Frase> colaFrases;
     private DialogoData datosActuales;
-    
-    // Usamos MonoBehaviour para que acepte cualquier script de movimiento
     private MonoBehaviour scriptMovimiento;
+    
+    private bool estaEscribiendo = false;
+    private string textoCompletoActual;
 
     void Start() {
         colaFrases = new Queue<Frase>();
         panelDialogo.SetActive(false);
         
-        // Buscamos cualquiera de los dos scripts que podrías estar usando
         scriptMovimiento = FindAnyObjectByType<Moverse_Mapa2d>();
-        
         if (scriptMovimiento == null) {
             scriptMovimiento = FindAnyObjectByType<PlayerMovement>();
         }
@@ -31,7 +36,6 @@ public class ManagerDialogos : MonoBehaviour
         datosActuales = data;
         panelDialogo.SetActive(true);
         
-        // Congelamos a Marsh
         if (scriptMovimiento != null) scriptMovimiento.enabled = false;
 
         colaFrases.Clear();
@@ -42,6 +46,14 @@ public class ManagerDialogos : MonoBehaviour
     }
 
     public void SiguienteFrase() {
+        // Si el jugador pulsa Espacio mientras se escribe, mostramos el texto completo
+        if (estaEscribiendo) {
+            StopAllCoroutines();
+            textoDialogo.text = textoCompletoActual;
+            estaEscribiendo = false;
+            return;
+        }
+
         if (colaFrases.Count == 0) {
             FinalizarInteraccion();
             return;
@@ -49,13 +61,36 @@ public class ManagerDialogos : MonoBehaviour
 
         Frase fraseActual = colaFrases.Dequeue();
         textoNombre.text = fraseActual.nombre;
-        textoDialogo.text = fraseActual.texto;
+        
+        // Lógica del Retrato
+        if (imagenRetrato != null) {
+            if (fraseActual.retrato != null) {
+                imagenRetrato.sprite = fraseActual.retrato;
+                imagenRetrato.gameObject.SetActive(true);
+            } else {
+                imagenRetrato.gameObject.SetActive(false);
+            }
+        }
+
+        // Iniciar efecto de escritura
+        textoCompletoActual = fraseActual.texto;
+        StartCoroutine(EscribirLetraPorLetra(fraseActual.texto));
+    }
+
+    IEnumerator EscribirLetraPorLetra(string texto) {
+        textoDialogo.text = "";
+        estaEscribiendo = true;
+
+        foreach (char letra in texto.ToCharArray()) {
+            textoDialogo.text += letra;
+            yield return new WaitForSeconds(velocidadEscritura);
+        }
+
+        estaEscribiendo = false;
     }
 
     void FinalizarInteraccion() {
         panelDialogo.SetActive(false);
-        
-        // Devolvemos el control a Marsh
         if (scriptMovimiento != null) scriptMovimiento.enabled = true;
 
         if (datosActuales != null && datosActuales.cambiarEscenaAlFinal) {

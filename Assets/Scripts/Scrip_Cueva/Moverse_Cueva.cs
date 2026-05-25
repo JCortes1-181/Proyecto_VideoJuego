@@ -18,7 +18,10 @@ public class Moverse_Cueva : MonoBehaviour
 
     public Transform controladorAtaque;   
     public float radioAtaque = 0.5f;      
-    public LayerMask queEsEnemigo;       
+    public LayerMask queEsEnemigo;   
+
+    public AudioSource audioSource; // Arrastra aquí el componente AudioSource
+    public AudioClip sonidoAtaque;    
     void Start()
     {
 
@@ -69,6 +72,10 @@ public class Moverse_Cueva : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("Attack"); 
+        }
+        if (audioSource != null && sonidoAtaque != null)
+        {
+            audioSource.PlayOneShot(sonidoAtaque);
         }
 
         StartCoroutine(EsperarParaHacerDanio());
