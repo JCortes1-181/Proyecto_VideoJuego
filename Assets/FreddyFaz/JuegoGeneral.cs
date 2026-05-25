@@ -49,7 +49,7 @@ public class JuegoGeneral : MonoBehaviour
         // Aumentamos el contador: cada vez que entramos a la oficina tras un reto, cuenta como uno más
         // (Nota: minijuegosCompletados se aumenta antes de lanzar el siguiente)
 
-        string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC" };
+        string[] minijuegos = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC","minijuego_espacio", "MinijuegoMatar" };
         int indiceAleatorio = Random.Range(0, minijuegos.Length);
         string escenaElegida = minijuegos[indiceAleatorio];
 

@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     [Header("Disparo")]
     public GameObject balaPrefab; 
     public Transform puntoDisparo; 
+    
+    [Header("Conexiones")]
+    public ControladorSpace controladorJuego;
 
     private Rigidbody2D rb2d;
     private Vector2 movement;
@@ -19,7 +22,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         movement.x = Input.GetAxis("Horizontal"); 
-
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -34,7 +36,18 @@ public class PlayerController : MonoBehaviour
 
     void Disparar()
     {
-        
         Instantiate(balaPrefab, puntoDisparo.position, Quaternion.identity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemigos"))
+        {
+            if(controladorJuego != null)
+            {
+                controladorJuego.JugadorTocado();
+            }
+            gameObject.SetActive(false);
+        }
     }
 }

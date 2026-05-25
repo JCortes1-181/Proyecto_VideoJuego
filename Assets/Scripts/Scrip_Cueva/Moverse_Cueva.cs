@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Moverse_Cueva : MonoBehaviour
 {
+    public ControladorCueva controladorJuego;
     public float velocidad = 5f;
     public Animator animator;
     private Rigidbody2D rb;
@@ -125,6 +126,11 @@ public class Moverse_Cueva : MonoBehaviour
         }
 
         StartCoroutine(AcomodarCuerpoEnElSuelo());
+    
+        if (controladorJuego != null)
+        {
+            controladorJuego.Finalizar(false);
+        }
     }
 
     System.Collections.IEnumerator AcomodarCuerpoEnElSuelo()
