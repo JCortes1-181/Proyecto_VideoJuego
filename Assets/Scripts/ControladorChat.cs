@@ -10,18 +10,14 @@ public class ControladorChat : MonoBehaviour
 
     [Header("Configuración del Minijuego")]
     public int letrasNecesarias = 40;
-    // --- NUEVA LÍNEA: Tiempo límite ---
-    public float tiempoLimite = 10f; 
+    public float tiempoLimite = 5f; // ¡Fijado en 5 segundos de pura tensión!
     private float cronometro = 0f;
-    // ----------------------------------
 
     [Header("Conexión con Efectos Finales")]
     public EfectosFinalChat scriptEfectos;
 
-    // --- NUEVA LÍNEA: Casilla para conectar la cámara ---
     [Header("Conexión con la Cámara")]
     public EfectoVibracion scriptVibracion; 
-    // ----------------------------------------------------
 
     private string abecedarioCaotico = "ASDFGHJKLZXCVBNMQWERTYUIOPXNFFJDLSK";
     private int letrasActuales = 0;
@@ -33,22 +29,21 @@ public class ControladorChat : MonoBehaviour
         {
             cuadroTextoSpam.text = "";
         }
-        // Inicializamos el cronómetro
-        cronometro = tiempoLimite;
+        cronometro = tiempoLimite; // Inicializa los 5 segundos
     }
 
     void Update()
     {
         if (juegoTerminado) return;
 
-        // --- LÓGICA DEL TEMPORIZADOR ---
+        // --- LÓGICA DEL TEMPORIZADOR INVISIBLE ---
         cronometro -= Time.deltaTime;
         if (cronometro <= 0)
         {
-            TerminarJuego(false); // Pierde por tiempo
+            TerminarJuego(false); // Pierde por tiempo agotado
             return;
         }
-        // -------------------------------
+        // -----------------------------------------
 
         if (Input.anyKeyDown && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
         {
@@ -62,13 +57,10 @@ public class ControladorChat : MonoBehaviour
         cuadroTextoSpam.text += letraRandom;
         letrasActuales++;
 
-        // --- NUEVA LÍNEA: Hace vibrar la cámara con cada letra ---
         if (scriptVibracion != null)
         {
-            // Duración: 0.05 segundos, Intensidad: 0.1 (puedes cambiarlo en el inspector)
             StartCoroutine(scriptVibracion.Shake(0.05f, 15.0f)); 
         }
-        // --------------------------------------------------------
 
         if (letrasActuales >= letrasNecesarias)
         {
@@ -79,27 +71,35 @@ public class ControladorChat : MonoBehaviour
     public void TerminarJuego(bool victoria)
     {
         juegoTerminado = true;
+        StartCoroutine(EsperarYCambiarEscena(victoria));
+    }
 
+    IEnumerator EsperarYCambiarEscena(bool victoria)
+    {
         if (victoria)
         {
-            Debug.Log("¡Victoria! Avisando al script de efectos para el BOOM.");
+            Debug.Log("¡Victoria! Activando cartel y sonido de baneo...");
             if (scriptEfectos != null)
             {
                 scriptEfectos.ActivarVictoria();
             }
-            SceneManager.LoadScene("FreddyFazbear"); // Solo vuelve
+
+            yield return new WaitForSeconds(2.5f); // 2 segundos y medio para lucirse
+            SceneManager.LoadScene("FreddyFazbear");
         }
         else
         {
-            Debug.Log("¡Derrota! Avisando al script de efectos para la música triste.");
+            Debug.Log("¡Derrota! El pollo se burla de ti.");
             if (scriptEfectos != null)
             {
                 scriptEfectos.ActivarDerrota();
             }
-            
-            // Si pierde: Resta vida y vuelve a la oficina
+
+            // Resta un corazón en el script que controla tus vidas globales
             ControladorVidas.vidasGlobales--; 
-            SceneManager.LoadScene("FreddyFazbear");
+
+            yield return new WaitForSeconds(2.5f); // Se queda el pollo en pantalla con el audio triste
+            SceneManager.LoadScene("FreddyFazbear"); // Te manda de vuelta castigado
         }
     }
 }

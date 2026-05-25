@@ -2,49 +2,73 @@ using UnityEngine;
 
 public class EfectosFinalChat : MonoBehaviour
 {
-    [Header("Efecto de Victoria (Explosión)")]
-    public GameObject prefabExplosion;   
-    public Transform posicionExplosion;  
+    [Header("CONFIGURACIÓN DE UI")]
+    public GameObject objetoImagenBaneo;      // Para la victoria
+    public GameObject objetoImagenPollo;      // ¡NUEVO: Para la derrota!
+    public GameObject textoSpamJugador;
 
-    [Header("Efecto de Derrota (Audio)")]
-    public AudioSource altavozSonido;  
-    public AudioClip sonidoDerrota;      
+    [Header("AUDIOS DEL MINIJUEGO")]
+    public AudioClip musicaFondo;
+    public AudioClip sonidoVictoria;
+    public AudioClip sonidoDerrota;
 
+    private AudioSource fuenteMusicaInterna;
+    private AudioSource fuenteEfectosInterna;
+    private bool juegoTerminado = false;
 
-public void ActivarVictoria()
+    void Start()
     {
-        if (prefabExplosion != null && posicionExplosion != null)
+        AudioSource[] fuentesExistentes = GetComponents<AudioSource>();
+        
+        fuenteMusicaInterna = fuentesExistentes.Length > 0 ? fuentesExistentes[0] : gameObject.AddComponent<AudioSource>();
+        fuenteEfectosInterna = fuentesExistentes.Length > 1 ? fuentesExistentes[1] : gameObject.AddComponent<AudioSource>();
+
+        fuenteMusicaInterna.clip = musicaFondo;
+        fuenteMusicaInterna.loop = true;
+        fuenteMusicaInterna.playOnAwake = false;
+        fuenteMusicaInterna.volume = 0.7f;
+        
+        fuenteEfectosInterna.loop = false;
+        fuenteEfectosInterna.playOnAwake = false;
+        fuenteEfectosInterna.volume = 1.0f;
+
+        if (musicaFondo != null)
         {
-            // 1. Creamos la explosión
-            GameObject explosionClonada = Instantiate(prefabExplosion);
-            
-            Canvas canvasActual = FindObjectOfType<Canvas>();
-            if (canvasActual != null)
-            {
-                // 2. La hacemos hija del Canvas
-                explosionClonada.transform.SetParent(canvasActual.transform, false);
-                explosionClonada.transform.SetAsLastSibling(); // Al frente de todo
-
-                // 3. LA CORRECCIÓN: Copiamos la posición exacta de la UI de forma segura
-                RectTransform rectExplosion = explosionClonada.GetComponent<RectTransform>();
-                RectTransform rectDestino = posicionExplosion.GetComponent<RectTransform>();
-
-                if (rectExplosion != null && rectDestino != null)
-                {
-                    // Esto iguala los pivotes y la posición exacta en la pantalla
-                    rectExplosion.anchoredPosition = rectDestino.anchoredPosition;
-                }
-            }
-
-            Debug.Log("¡BOOM! Explosión reubicada perfectamente en la UI.");
+            fuenteMusicaInterna.Play();
         }
     }
+
+    public void ActivarVictoria()
+    {
+        if (juegoTerminado) return;
+        juegoTerminado = true;
+
+        if (fuenteMusicaInterna != null) fuenteMusicaInterna.Stop();
+
+        if (textoSpamJugador != null) textoSpamJugador.SetActive(false);
+        if (objetoImagenBaneo != null) objetoImagenBaneo.SetActive(true); // Muestra cartel de baneo
+
+        if (fuenteEfectosInterna != null && sonidoVictoria != null)
+        {
+            fuenteEfectosInterna.clip = sonidoVictoria;
+            fuenteEfectosInterna.Play();
+        }
+    }
+
     public void ActivarDerrota()
     {
-        if (altavozSonido != null && sonidoDerrota != null)
+        if (juegoTerminado) return;
+        juegoTerminado = true;
+
+        if (fuenteMusicaInterna != null) fuenteMusicaInterna.Stop();
+
+        if (textoSpamJugador != null) textoSpamJugador.SetActive(false);
+        if (objetoImagenPollo != null) objetoImagenPollo.SetActive(true); // ¡Muestra al pollo riéndose!
+
+        if (fuenteEfectosInterna != null && sonidoDerrota != null)
         {
-            altavozSonido.PlayOneShot(sonidoDerrota);
-            Debug.Log("Sonido triste reproducido desde el script de efectos.");
+            fuenteEfectosInterna.clip = sonidoDerrota;
+            fuenteEfectosInterna.Play();
         }
     }
 }

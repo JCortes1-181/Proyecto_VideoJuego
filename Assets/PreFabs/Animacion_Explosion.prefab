@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6322958077333805328}
   - component: {fileID: 7372974763779580105}
   - component: {fileID: 5752185169370529436}
+  - component: {fileID: 3196030918157397497}
   m_Layer: 5
   m_Name: Animacion_Explosion
   m_TagString: Untagged
@@ -99,3 +100,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3196030918157397497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337854345976096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517a189ad423aa54382393e4cad8e4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyOnEvent
