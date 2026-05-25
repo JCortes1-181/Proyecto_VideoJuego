@@ -11,10 +11,10 @@ public class DialogoData : ScriptableObject
     public string nombreEscenaDestino;
 }
 
-
 [System.Serializable]
 public struct Frase 
 {
     public string nombre; // Quién habla
     [TextArea(3, 10)] public string texto; // Qué dice
+    public Sprite retrato; // <-- NUEVO: Aquí arrastrarás la cara/expresión del personaje
 }

@@ -324,7 +324,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7928858964255100155, guid: c9e6a1f1e289c1e4d90a075c32690f14,
     type: 3}
@@ -438,6 +438,7 @@ MonoBehaviour:
   detectionRadius: 10.12
   attackRadius: 2
   cooldownAtaque: 1.5
+  estaMuerto: 0
 --- !u!50 &135029666
 Rigidbody2D:
   serializedVersion: 5
@@ -1146,7 +1147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.625, y: 0.8125}
+    oldSize: {x: 1.3125, y: 2.375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1292,6 +1293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b4bcd92a15e164fac13ba71e727b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Moverse_Cueva
+  controladorJuego: {fileID: 875954754}
   velocidad: 5
   animator: {fileID: 475457423}
   fuerzaSalto: 10
@@ -1379,6 +1381,53 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 219918442}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &875954753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 875954755}
+  - component: {fileID: 875954754}
+  m_Layer: 0
+  m_Name: ManagerCueva
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &875954754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875954753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db613a8044e51ae498a392944005ee38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControladorCueva
+  gifGanaste: {fileID: 0}
+  gifPerdiste: {fileID: 0}
+  scriptEnemigo: {fileID: 135029665}
+--- !u!4 &875954755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875954753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.46125, y: -0.30082, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1201062277
@@ -1693,3 +1742,4 @@ SceneRoots:
   - {fileID: 135029662}
   - {fileID: 2876039555178106628}
   - {fileID: 1338119751}
+  - {fileID: 875954755}

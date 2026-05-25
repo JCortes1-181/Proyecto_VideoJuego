@@ -9,12 +9,14 @@ public class ControladorVidas : MonoBehaviour
     public GameObject objetoJumpscare; 
     public AudioSource sonidoGrito;   
 
+    [Header("UI de Menú")]
+    public GameObject panelGameOver; // Arrastra tu Panel_GameOver aquí
+
     void Start() {
         ActualizarVisualVidas();
     }
 
     public void ActualizarVisualVidas() {
-        // Desactiva los corazones según las vidas restantes
         for (int i = 0; i < corazonesUI.Length; i++) {
             if (corazonesUI[i] != null) {
                 corazonesUI[i].SetActive(i < vidasGlobales);
@@ -38,8 +40,12 @@ public class ControladorVidas : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         
-        // Reiniciamos todo para volver a empezar
-        vidasGlobales = 4;
-        SceneManager.LoadScene("FreddyFazbear"); 
+        // --- CAMBIO PARA EL MENÚ ---
+        if (objetoJumpscare != null) objetoJumpscare.SetActive(false);
+        if (panelGameOver != null) panelGameOver.SetActive(true);
+        
+        Cursor.visible = true; // Mostramos el mouse para clickear
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f; // Pausamos el juego
     }
 }
