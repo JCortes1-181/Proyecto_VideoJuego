@@ -6,6 +6,6 @@ public class MenuPrincipal : MonoBehaviour
     public void Jugar()
     {
         
-        SceneManager.LoadScene("CasaInicio");
+        SceneManager.LoadScene("NuevoMenu");
     }
 }

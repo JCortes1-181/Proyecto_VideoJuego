@@ -38,5 +38,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Minijuego_Chat.unity
     guid: adc21244095ac684cb10118b421695bf
+  - enabled: 1
+    path: Assets/Scenes/Mapas/NuevoMenu.unity
+    guid: eb65f233432462b498503fec033fe1c4
+  - enabled: 1
+    path: Assets/Scenes/Historia/HistoriaEtapa1.unity
+    guid: a277ac05d215cdb4e9c72ec2c76dbcbe
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

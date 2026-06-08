@@ -21,7 +21,7 @@ public class GestionEscenas : MonoBehaviour
         EstadoMundo.estadoActual = EstadoMundo.EstadoNpc.VolvioDerrotado;
         ControladorVidas.vidasGlobales = 4;
         JuegoGeneral.minijuegosCompletados = 0;
-        SceneManager.LoadScene("MapaCompleto"); 
+        SceneManager.LoadScene("NuevoMenu"); 
     }
 
     public void ContinuarVictoria() {
@@ -29,6 +29,6 @@ public class GestionEscenas : MonoBehaviour
         EstadoMundo.estadoActual = EstadoMundo.EstadoNpc.VolvioVictorioso;
         ControladorVidas.vidasGlobales = 4;
         JuegoGeneral.minijuegosCompletados = 0;
-        SceneManager.LoadScene("MapaCompleto"); 
+        SceneManager.LoadScene("NuevoMenu"); 
     }
 }
