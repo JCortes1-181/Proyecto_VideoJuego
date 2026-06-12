@@ -12,8 +12,8 @@ public class SeleccionEtapa : MonoBehaviour
     [Header("Referencias de la UI")]
     public GameObject panelDetalle;      
     public Image visualizadorImagen;     
-    public Button botonConfirmar;        
-    public Button botonCerrar;           
+    public Button botonCerrar;        
+    public Button botonJugar;           
 
     [Header("Configuración de la Animación")]
     [Tooltip("Tiempo en segundos que tarda en deslizarse el panel")]
@@ -63,11 +63,11 @@ public class SeleccionEtapa : MonoBehaviour
         }
 
         // Limpiamos eventos previos
-        botonConfirmar.onClick.RemoveAllListeners();
+        botonJugar.onClick.RemoveAllListeners();
         botonCerrar.onClick.RemoveAllListeners();
 
         // Configurar botones
-        botonConfirmar.onClick.AddListener(() => {
+        botonJugar.onClick.AddListener(() => {
             SceneManager.LoadScene(nombreEscenaMinijuego);
         });
 
