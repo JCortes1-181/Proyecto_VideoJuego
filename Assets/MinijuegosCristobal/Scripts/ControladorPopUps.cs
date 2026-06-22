@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Video; // Requerido para controlar videos reales
+using UnityEngine.Video;
 using System.Collections;
 using System.Collections.Generic;
 
 public class ControladorPopUps : MinijuegoBase
 {
     [Header("UI Referencias")]
-    public RectTransform areaCanvas;       // Arrastra aquí tu 'Contenedor_Anuncios'
+    public RectTransform areaCanvas;       
     public GameObject prefabPopUp;         
-    public GameObject efectoVirusDerrota;  // El panel que solo tapa la pantalla del PC
+    public GameObject efectoVirusDerrota;  
 
     [Header("Sistema de Video (Victoria)")]
-    public RawImage pantallaVideoUI;       // El componente RawImage donde se proyecta el video
-    public VideoPlayer reproductorVideo;   // El componente VideoPlayer que reproduce el archivo
+    public RawImage pantallaVideoUI;       
+    public VideoPlayer reproductorVideo;   
 
     [Header("Variedad de Anuncios")]
     public Sprite[] imagenesAnuncios;
@@ -21,6 +21,10 @@ public class ControladorPopUps : MinijuegoBase
     [Header("Audio (Windows XP Style)")]
     public AudioSource fuenteAudio;        
     public AudioClip sonidoErrorXP;        
+    public AudioClip sonidoVictoria;       
+
+    [Header("Música de Fondo")]
+    public AudioSource fuenteMusicaFondo; 
 
     [Header("Configuración del Caos")]
     public float tiempoEntrePopUps = 0.8f; 
@@ -32,16 +36,21 @@ public class ControladorPopUps : MinijuegoBase
 
     protected override void Start()
     {
-        tiempoLimite = 10f; // 10 segundos resistiendo
+        tiempoLimite = 10f; 
         base.Start();
 
         efectoVirusDerrota.SetActive(false);
         
-        // El video empieza oculto/pausado hasta que ganes
         if (pantallaVideoUI != null) pantallaVideoUI.gameObject.SetActive(false);
         if (reproductorVideo != null) reproductorVideo.Stop();
 
         if (fuenteAudio == null) fuenteAudio = GetComponent<AudioSource>();
+
+        if (fuenteMusicaFondo != null && fuenteMusicaFondo.clip != null)
+        {
+            fuenteMusicaFondo.loop = true; 
+            fuenteMusicaFondo.Play();
+        }
 
         CrearNuevoPopUp();
     }
@@ -80,7 +89,6 @@ public class ControladorPopUps : MinijuegoBase
         GameObject nuevoAnuncio = Instantiate(prefabPopUp, areaCanvas);
         listaPopUpsActivos.Add(nuevoAnuncio);
 
-        // Cambiar la imagen al azar
         if (imagenesAnuncios != null && imagenesAnuncios.Length > 0)
         {
             Image imagenFondo = nuevoAnuncio.GetComponent<Image>();
@@ -93,7 +101,6 @@ public class ControladorPopUps : MinijuegoBase
 
         ReproducirSonidoError();
 
-        // Posicionamiento calculado SOLO dentro del Contenedor_Anuncios
         float anchoMax = (areaCanvas.rect.width / 2f) - 80f; 
         float altoMax = (areaCanvas.rect.height / 2f) - 50f;
 
@@ -103,11 +110,32 @@ public class ControladorPopUps : MinijuegoBase
         RectTransform rectAnuncio = nuevoAnuncio.GetComponent<RectTransform>();
         rectAnuncio.anchoredPosition = new Vector2(randomX, randomY);
 
-        // Configurar botón cerrar
         Button botonCerrar = nuevoAnuncio.GetComponentInChildren<Button>();
         if (botonCerrar != null)
         {
             botonCerrar.onClick.AddListener(() => CerrarAnuncio(nuevoAnuncio));
+        }
+
+        // 🔥 EFECTO VISUAL: El pop-up nace desde tamaño 0 y se infla rápidamente
+        rectAnuncio.localScale = Vector3.zero;
+        StartCoroutine(AnimarEntradaPopUp(rectAnuncio));
+    }
+
+    // Corrutina para suavizar la entrada del anuncio
+    private IEnumerator AnimarEntradaPopUp(RectTransform rect)
+    {
+        float tiempo = 0f;
+        float duracion = 0.15f; // Qué tan rápido se expande (0.15 segundos)
+        
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+            if (rect == null) yield break;
+            
+            float progreso = tiempo / duracion;
+            // Va desde 0 hasta 1 en escala
+            rect.localScale = Vector3.Lerp(Vector3.zero, new Vector3(1f, 1f, 1f), progreso);
+            yield return null;
         }
     }
 
@@ -127,21 +155,20 @@ public class ControladorPopUps : MinijuegoBase
         }
     }
 
-    // CORRUTINA: Genera anuncios persas que colapsan la pantalla del PC
     private IEnumerator CoSaturacionDerrota()
     {
-        juegoTerminado = true; // Pausamos el flujo normal del minijuego
+        juegoTerminado = true;
+
+        if (fuenteMusicaFondo != null) fuenteMusicaFondo.Stop();
 
         for (int i = 0; i < 20; i++)
         {
             GameObject clonCaos = Instantiate(prefabPopUp, areaCanvas);
             RectTransform rect = clonCaos.GetComponent<RectTransform>();
-            
-            // Spawnea por todo el monitor
             rect.anchoredPosition = new Vector2(Random.Range(-250f, 250f), Random.Range(-180f, 180f));
             
             ReproducirSonidoError(); 
-            yield return new WaitForSeconds(0.04f); // Velocidad supersónica de ruidos
+            yield return new WaitForSeconds(0.04f); 
         }
 
         yield return new WaitForSeconds(0.4f);
@@ -152,15 +179,21 @@ public class ControladorPopUps : MinijuegoBase
     {
         if (victoria)
         {
-            Debug.Log("¡Victoria! Limpiando anuncios y reproduciendo serie.");
+            Debug.Log("¡Victoria!");
             
+            if (fuenteMusicaFondo != null) fuenteMusicaFondo.Stop();
+            
+            if (fuenteAudio != null && sonidoVictoria != null)
+            {
+                fuenteAudio.PlayOneShot(sonidoVictoria);
+            }
+
             foreach (GameObject popUp in listaPopUpsActivos)
             {
                 if (popUp != null) Destroy(popUp);
             }
             listaPopUpsActivos.Clear();
 
-            // ACTIVAR Y REPRODUCIR EL VIDEO
             if (pantallaVideoUI != null && reproductorVideo != null)
             {
                 pantallaVideoUI.gameObject.SetActive(true);
@@ -169,11 +202,8 @@ public class ControladorPopUps : MinijuegoBase
         }
         else
         {
-            Debug.Log("Infección en el PC.");
-            if (efectoVirusDerrota != null)
-            {
-                efectoVirusDerrota.SetActive(true); 
-            }
+            if (fuenteMusicaFondo != null) fuenteMusicaFondo.Stop();
+            if (efectoVirusDerrota != null) efectoVirusDerrota.SetActive(true); 
         }
 
         StartCoroutine(EsperarYRegresar(victoria));
