@@ -489,7 +489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 109.8228, y: 4.6733}
+  m_AnchoredPosition: {x: 314, y: 45.327}
   m_SizeDelta: {x: 319.6455, y: 90.6534}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &306359455
@@ -663,6 +663,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319575854}
   m_CullTransparentMesh: 1
+--- !u!1 &346103906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346103909}
+  - component: {fileID: 346103908}
+  - component: {fileID: 346103907}
+  m_Layer: 5
+  m_Name: 'Jumpscare_Usagi '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &346103907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346103906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 3708744854186772838, guid: 9b862eb356dac78448f33684745ef037,
+    type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &346103908
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346103906}
+  m_CullTransparentMesh: 1
+--- !u!224 &346103909
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346103906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1935830873}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &357137359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,6 +1507,7 @@ GameObject:
   - component: {fileID: 584779436}
   - component: {fileID: 584779438}
   - component: {fileID: 584779437}
+  - component: {fileID: 584779439}
   m_Layer: 5
   m_Name: Celular_Nokia
   m_TagString: Untagged
@@ -1498,6 +1575,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584779435}
   m_CullTransparentMesh: 1
+--- !u!114 &584779439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584779435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868e82af7c533714789ea9e174fd5917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EfectoGiroCelular
+  velocidadGiro: 3
+  anguloMaximo: 15
+  velocidadFlote: 2
+  AmplitudFlote: 20
 --- !u!1 &588733545
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,7 +3432,7 @@ GameObject:
   - component: {fileID: 1680156311}
   - component: {fileID: 1680156310}
   m_Layer: 0
-  m_Name: ameManager_Usagi
+  m_Name: GameManager_Usagi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3368,6 +3461,9 @@ MonoBehaviour:
     type: 3}
   fotoUsagiDerrota: {fileID: 3708744854186772838, guid: 9b862eb356dac78448f33684745ef037,
     type: 3}
+  objetoJumpscare: {fileID: 346103906}
+  fuenteEfectos: {fileID: 0}
+  sonidoSusto: {fileID: 0}
   cantidadDigitos: 4
 --- !u!4 &1680156311
 Transform:
@@ -3686,6 +3782,7 @@ RectTransform:
   - {fileID: 584779436}
   - {fileID: 32148614}
   - {fileID: 306359454}
+  - {fileID: 346103909}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
