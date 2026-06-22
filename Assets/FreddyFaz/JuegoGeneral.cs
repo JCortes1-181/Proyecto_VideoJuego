@@ -21,6 +21,13 @@ public class JuegoGeneral : MonoBehaviour
     public GameObject panelVictoria;
     public GameObject panelGameOver;
 
+    // --- ESTO ES LO NUEVO: Variables para saber a dónde volver ---
+    [Header("Conexión con el Mapa Principal")]
+    [Tooltip("¿Qué nivel es este macro-juego? (1, 2 o 3)")]
+    public int numeroDeNivelActual = 1;
+    public string nombreEscenaMapa = "NuevoMenu";
+    // -------------------------------------------------------------
+
     private static List<string> bolsaMinijuegos = new List<string>();
     private string[] listaMaestra = { "Minijuego_Chat", "Minijuego_recolectar", "MinijuegoSC", "minijuego_espacio", "MinijuegoMatar", "MinijuegoSkate" }; 
 
@@ -88,5 +95,26 @@ public class JuegoGeneral : MonoBehaviour
         OcultarUIInGame(); // Apagamos contador y corazones al ganar
         if(panelVictoria != null) panelVictoria.SetActive(true);
         if(bolsaMinijuegos != null) bolsaMinijuegos.Clear(); 
+
+        // --- ESTO ES LO NUEVO: Avisar al Cerebro que ganamos ---
+        if (GestorDeProgreso.Instancia != null)
+        {
+            if (numeroDeNivelActual == 1) GestorDeProgreso.Instancia.SuperarNivel1();
+            else if (numeroDeNivelActual == 2) GestorDeProgreso.Instancia.SuperarNivel2();
+            else if (numeroDeNivelActual == 3) GestorDeProgreso.Instancia.SuperarHistoria();
+        }
+        // --------------------------------------------------------
     }
+
+    // --- ESTO ES LO NUEVO: Función para el botón del panel de victoria ---
+    public void VolverAlMapa()
+    {
+        // Reseteamos las variables para cuando el jugador vuelva a entrar a otro nivel
+        minijuegosCompletados = 0;
+        ControladorVidas.vidasGlobales = 4; // Resetea las vidas a su valor inicial
+        Time.timeScale = 1f; 
+        
+        SceneManager.LoadScene(nombreEscenaMapa);
+    }
+    // ---------------------------------------------------------------------
 }

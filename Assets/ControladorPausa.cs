@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Necesario para el Slider
 
 public class ControladorPausa : MonoBehaviour
 {
@@ -7,12 +8,14 @@ public class ControladorPausa : MonoBehaviour
 
     [Header("UI Componentes")]
     [SerializeField] private GameObject panelPausa;
+    
+    [Header("Ajustes")]
+    [SerializeField] private Slider sliderVolumen; // El Slider que pondrás en tu PanelPausa
 
     private bool juegoPausado = false;
 
     void Awake()
     {
-       
         if (Instancia != null && Instancia != this)
         {
             Destroy(gameObject);
@@ -20,74 +23,83 @@ public class ControladorPausa : MonoBehaviour
         }
 
         Instancia = this;
-        
         DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        panelPausa.SetActive(false);
+        if (panelPausa != null) panelPausa.SetActive(false);
+
+        // Cargar el volumen guardado (por defecto 100%)
+        float volumenGuardado = PlayerPrefs.GetFloat("VolumenJuego", 1f);
+        AudioListener.volume = volumenGuardado;
+
+        if (sliderVolumen != null)
+        {
+            sliderVolumen.value = volumenGuardado;
+            // Conectar el slider a la función automáticamente
+            sliderVolumen.onValueChanged.AddListener(CambiarVolumen);
+        }
     }
 
     void Update()
-{
-    if (Input.GetKeyDown(KeyCode.Escape))
     {
-        
-        Debug.Log("Tecla ESC presionada. Escena actual: " + SceneManager.GetActiveScene().name);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Tecla ESC presionada. Escena actual: " + SceneManager.GetActiveScene().name);
 
-        if (SceneManager.GetActiveScene().name == "MenuPrincipal") 
-        {
-            Debug.Log("Pausa cancelada: Estás en el Menú Principal.");
-            return;
-        }
+            if (SceneManager.GetActiveScene().name == "MenuPrincipal") 
+            {
+                return; // No pausar en el menú principal
+            }
 
-        if (juegoPausado) 
-        {
-            Debug.Log("Cambiando a: Reanudar");
-            Reanudar();
-        }
-        else 
-        {
-            Debug.Log("Cambiando a: Pausar");
-            Pausar();
+            if (juegoPausado) 
+            {
+                Reanudar();
+            }
+            else 
+            {
+                Pausar();
+            }
         }
     }
-}
 
     public void Pausar()
     {
-        panelPausa.SetActive(true);
+        if (panelPausa != null) panelPausa.SetActive(true);
         Time.timeScale = 0f;
         juegoPausado = true;
     }
 
     public void Reanudar()
     {
-        panelPausa.SetActive(false);
+        if (panelPausa != null) panelPausa.SetActive(false);
         Time.timeScale = 1f;
         juegoPausado = false;
+    }
+
+    // --- FUNCIÓN DEL VOLUMEN ---
+    public void CambiarVolumen(float valor)
+    {
+        AudioListener.volume = valor;
+        PlayerPrefs.SetFloat("VolumenJuego", valor);
     }
 
     public void VolverAlMenu()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; 
         juegoPausado = false;
-        panelPausa.SetActive(false); 
+        if (panelPausa != null) panelPausa.SetActive(false); 
         SceneManager.LoadScene("MenuPrincipal"); 
     }
 
     public void SalirDelJuego()
-{
-
-    Debug.Log("Saliendo del juego..."); 
-    
-    
-    Application.Quit(); 
-
-    
-    #if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
-    #endif
-}
+    {
+        Debug.Log("Saliendo del juego..."); 
+        Application.Quit(); 
+        
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
 }
