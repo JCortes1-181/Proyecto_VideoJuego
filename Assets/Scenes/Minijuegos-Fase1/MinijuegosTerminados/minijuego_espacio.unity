@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d79a6be0a3aca4883bcbe46ade7178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridEnemigos
-  velocidad: 2
+  velocidad: 8
   distanciaBajada: 0.5
   limiteIzquierdo: 0
   limiteDerecho: 3
@@ -182,8 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GeneradorEnemigos
   prefabEnemigo: {fileID: 5061007746857591297, guid: fd37adac6b8e16b4f8cd8c0259217bc7,
     type: 3}
-  filas: 3
-  columnas: 10
+  filas: 8
+  columnas: 1
   espacioX: 1.5
   espacioY: 1
 --- !u!1 &1202581329
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2536bf2007cadcc42b6096cddc16e841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 5
+  speed: 0
   balaPrefab: {fileID: 5981487121983019884, guid: 49a0e3c80a45f4848ad39af0183c4ed4,
     type: 3}
   puntoDisparo: {fileID: 1955800099}
@@ -1006,9 +1006,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControladorSpace
   gifGanaste: {fileID: 0}
   gifPerdiste: {fileID: 0}
-  filas: 3
-  columnas: 10
-  enemigosTotales: 10
+  filas: 8
+  columnas: 1
+  enemigosTotales: 8
 --- !u!4 &1892321562
 Transform:
   m_ObjectHideFlags: 0
