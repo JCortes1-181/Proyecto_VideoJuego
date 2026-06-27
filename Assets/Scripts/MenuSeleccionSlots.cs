@@ -9,12 +9,19 @@ public class MenuSeleccionSlots : MonoBehaviour
     public TextMeshProUGUI textoSlot2;
     public TextMeshProUGUI textoSlot3;
 
+    [Header("Texto de Instrucciones (Nuevo/Opcional)")]
+    public TextMeshProUGUI textoIndicador; 
+
+    // Ya no usamos una variable privada aquí. Usamos la global de MenuPrincipal.
+
     void Start()
     {
         ActualizarInterfazSlots();
+        
+        if (textoIndicador != null) 
+            textoIndicador.text = "Selecciona un Slot para jugar";
     }
 
-    // Esto cambia los textos de tus botones para avisarle al jugador si hay datos guardados
     public void ActualizarInterfazSlots()
     {
         if (textoSlot1) textoSlot1.text = GestorGuardado.ExistePartidaEnSlot(1) 
@@ -30,28 +37,82 @@ public class MenuSeleccionSlots : MonoBehaviour
             : "Slot Vacío";
     }
 
-    // Esta función la van a llamar tus botones desde el Inspector
     public void PresionarSlot(int numeroSlot)
     {
-        // Indicamos cuál es el slot activo en esta sesión de juego
+        // --- INTERCEPCIÓN DE BORRADO SINCRONIZADA ---
+        if (MenuPrincipal.modoBorradoGlobal)
+        {
+            EjecutarBorradoDeSlot(numeroSlot);
+            return; 
+        }
+
         GestorGuardado.slotActual = numeroSlot;
+
+        PlayerPrefs.SetInt("SlotActual", numeroSlot);
+        PlayerPrefs.Save();
 
         if (GestorGuardado.ExistePartidaEnSlot(numeroSlot))
         {
-            // Si ya tiene datos, los cargamos
             GestorGuardado.CargarPartida();
         }
         else
         {
-            // Si está vacío, configuramos una partida totalmente limpia
             ControladorVidas.vidasGlobales = 4;
             JuegoGeneral.minijuegosCompletados = 0;
             
-            // Guardamos inmediatamente para inicializar el archivo
             GestorGuardado.GuardarPartida();
         }
 
-        // Una vez elegido el slot, mandamos al jugador al menú de inicio o al juego
+        if (GestorDeProgreso.Instancia != null)
+        {
+            GestorDeProgreso.Instancia.CargarProgreso();
+        }
+
         SceneManager.LoadScene("MenuPrincipal"); 
+    }
+
+    public void AlternarModoBorrado()
+    {
+        MenuPrincipal.modoBorradoGlobal = !MenuPrincipal.modoBorradoGlobal;
+
+        if (MenuPrincipal.modoBorradoGlobal)
+        {
+            Debug.Log("Modo Borrado Activado.");
+            if (textoIndicador != null) 
+                textoIndicador.text = "<color=red>¡SELECCIONA EL ARCHIVO QUE DESEAS BORRAR!</color>";
+        }
+        else
+        {
+            Debug.Log("Modo Borrado Cancelado.");
+            if (textoIndicador != null) 
+                textoIndicador.text = "Selecciona un Slot para jugar";
+        }
+    }
+
+    private void EjecutarBorradoDeSlot(int numeroSlot)
+    {
+        PlayerPrefs.DeleteKey("Progreso_Slot_" + numeroSlot);
+        
+        if (GestorDeProgreso.Instancia != null)
+        {
+            GestorDeProgreso.Instancia.BorrarProgresoDeSlotEspecifico(numeroSlot);
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Nivel1");
+            PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Nivel2");
+            PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Historia");
+        }
+
+        PlayerPrefs.Save(); 
+
+        Debug.Log("¡Datos del Slot " + numeroSlot + " eliminados correctamente!");
+
+        MenuPrincipal.modoBorradoGlobal = false;
+
+        if (textoIndicador != null) 
+            textoIndicador.text = "Slot " + numeroSlot + " borrado con éxito. Elige un Slot para jugar.";
+
+        ActualizarInterfazSlots();
     }
 }
