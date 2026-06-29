@@ -8,19 +8,26 @@ public class ControladorUsagi : MinijuegoBase
     [Header("UI Componentes")]
     public TextMeshProUGUI textoPapelNumero;      
     public TextMeshProUGUI textoPantallaCelular;  
+    public TextMeshProUGUI textoInstrucciones;  
 
     [Header("Visuales de Usagi en la Pantalla")]
     [Tooltip("Arrastra aquí la Image de Usagi que está dentro de la pantalla del Nokia")]
     public Image componenteImagenUsagi;           
-    public Sprite fotoUsagiNormal;     // La foto de inicio
-    public Sprite fotoUsagiVictoria;   // Usagi feliz contestando
-    public Sprite fotoUsagiDerrota;    // Usagi enojado/asustado
+    public Sprite fotoUsagiNormal;    
+    public Sprite fotoUsagiVictoria;  
+    public Sprite fotoUsagiDerrota;   
 
-    [Header("Jumpscare Game Over (🔥 NUEVO)")]
-    [Tooltip("Arrastra aquí el objeto 'Jumpscare_Usagi' que ocupa toda la pantalla y empieza apagado")]
+    [Header("Jumpscare Game Over (Integrado)")]
+    [Tooltip("Arrastra aquí el objeto de la jerarquía que ocupa toda la pantalla y empieza apagado")]
     public GameObject objetoJumpscare; 
-    public AudioSource fuenteEfectos;   // Parlante para el grito o ruido de error
-    public AudioClip sonidoSusto;      // Audio fuerte para el jumpscare
+    public AudioSource fuenteEfectos;  
+    public AudioSource fuenteMusica;   
+    
+    [Header("Audios del Minijuego (.mp3)")]
+    public AudioClip clipMusicaFondo;   
+    public AudioClip sonidoBoton;        
+    public AudioClip sonidoVictoria;    
+    public AudioClip sonidoSusto;      
 
     [Header("Configuración del Número")]
     public int cantidadDigitos = 4;
@@ -30,22 +37,32 @@ public class ControladorUsagi : MinijuegoBase
 
     protected override void Start()
     {
-        // 7 segundos para reaccionar
         tiempoLimite = 7f;
         base.Start();
 
         textoPantallaCelular.text = "";
 
-        // Dejamos a Usagi en su estado normal al arrancar
+        if (textoInstrucciones != null)
+        {
+            textoInstrucciones.text = "Marca los números para llamar a Usagi";
+            textoInstrucciones.color = Color.white; 
+        }
+
         if (componenteImagenUsagi != null && fotoUsagiNormal != null)
         {
             componenteImagenUsagi.sprite = fotoUsagiNormal;
         }
 
-        // Nos aseguramos de que el susto empiece apagado al iniciar la partida
         if (objetoJumpscare != null)
         {
             objetoJumpscare.SetActive(false);
+        }
+
+        if (fuenteMusica != null && clipMusicaFondo != null)
+        {
+            fuenteMusica.clip = clipMusicaFondo;
+            fuenteMusica.loop = true;
+            fuenteMusica.Play();
         }
 
         GenerarNumeroAleatorio();
@@ -66,56 +83,73 @@ public class ControladorUsagi : MinijuegoBase
     {
         if (juegoTerminado) return;
 
+        if (fuenteEfectos != null && sonidoBoton != null)
+        {
+            fuenteEfectos.PlayOneShot(sonidoBoton);
+        }
+
         numeroDigitado += numeroPresionado.ToString();
         textoPantallaCelular.text = numeroDigitado;
 
         int indiceActual = numeroDigitado.Length - 1;
 
-        // Si se equivoca ➡️ Derrota
         if (numeroDigitado[indiceActual] != numeroCorrecto[indiceActual])
         {
             TerminarJuego(false);
             return;
         }
 
-        // Si completa el número ➡️ Victoria
         if (numeroDigitado == numeroCorrecto)
         {
             TerminarJuego(true);
         }
     }
 
-    // El Update heredado de MinijuegoBase se encarga de restar el tiempo.
-    // Cuando el tiempo llega a cero, automáticamente llamará a TerminarJuego(false).
-
     public override void TerminarJuego(bool victoria)
     {
         if (juegoTerminado) return;
         juegoTerminado = true;
 
+        if (fuenteMusica != null) fuenteMusica.Stop();
+
         if (victoria)
         {
             Debug.Log("¡Usagi contestó feliz!");
+            
+            if (textoInstrucciones != null)
+            {
+                textoInstrucciones.text = "¡Llamada completada con éxito!";
+                textoInstrucciones.color = Color.green;
+            }
+
             if (componenteImagenUsagi != null && fotoUsagiVictoria != null)
             {
-                componenteImagenUsagi.sprite = fotoUsagiVictoria; // Cambia a foto feliz en el Nokia
+                componenteImagenUsagi.sprite = fotoUsagiVictoria; 
+            }
+
+            if (fuenteEfectos != null && sonidoVictoria != null)
+            {
+                fuenteEfectos.PlayOneShot(sonidoVictoria);
             }
         }
         else
         {
             Debug.Log("¡Pum! Perdiste. Activando Jumpscare...");
             
-            // Cambiamos la miniatura del celular por si acaso
+            if (textoInstrucciones != null)
+            {
+                textoInstrucciones.text = "¡Número equivocado!";
+                textoInstrucciones.color = Color.red;
+            }
+
             if (componenteImagenUsagi != null && fotoUsagiDerrota != null)
             {
                 componenteImagenUsagi.sprite = fotoUsagiDerrota; 
             }
 
-            // 🔥 Lanzamos el jumpscare gigante
             ActivarDerrotaJumpscare();
         }
 
-        // Espera los 2 segundos heredados de MinijuegoBase para volver a la oficina
         StartCoroutine(EsperarYRegresar(victoria));
     }
 
@@ -123,7 +157,6 @@ public class ControladorUsagi : MinijuegoBase
     {
         if (objetoJumpscare != null)
         {
-            // Ponemos la foto terrorífica/enojada en el componente grande antes de mostrarlo
             Image imagenSusto = objetoJumpscare.GetComponent<Image>();
             if (imagenSusto != null && fotoUsagiDerrota != null)
             {
@@ -132,13 +165,12 @@ public class ControladorUsagi : MinijuegoBase
 
             objetoJumpscare.SetActive(true);
             
-            // Reproducir el sonido estridente
             if (fuenteEfectos != null && sonidoSusto != null)
             {
+                fuenteEfectos.Stop();
                 fuenteEfectos.PlayOneShot(sonidoSusto);
             }
 
-            // Iniciar la animación de escalado violento
             StartCoroutine(CoAnimarSusto());
         }
     }
@@ -149,9 +181,8 @@ public class ControladorUsagi : MinijuegoBase
         if (rect == null) yield break;
 
         float tiempo = 0f;
-        float duracion = 0.15f; // Súper rápido (150 milisegundos) para que asuste
+        float duracion = 0.12f; 
 
-        // Nace muy pequeño desde el centro de la pantalla
         rect.localScale = new Vector3(0.1f, 0.1f, 1f);
 
         while (tiempo < duracion)
@@ -159,14 +190,12 @@ public class ControladorUsagi : MinijuegoBase
             tiempo += Time.deltaTime;
             float progreso = tiempo / duracion;
 
-            // Crece superando el tamaño normal de la pantalla (impacto visual)
             float escala = Mathf.Lerp(0.1f, 1.4f, progreso);
             rect.localScale = new Vector3(escala, escala, 1f);
 
             yield return null;
         }
 
-        // Se estabiliza tapando perfectamente todo el monitor
         rect.localScale = Vector3.one;
     }
 }
