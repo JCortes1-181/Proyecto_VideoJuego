@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // 👈 Asegúrate de que tenga esto arriba
+using TMPro; 
 
 public class EfectoTituloFeria : MonoBehaviour
 {
@@ -54,6 +54,15 @@ public class EfectoTituloFeria : MonoBehaviour
         {
             textoMesh.text = "¡¡GANASTE!!";
             textoMesh.color = Color.green; 
+        }
+    }
+    public void CambiarTextoDerrota()
+    {
+        juegoTerminado = true;
+        if (textoMesh != null)
+        {
+            textoMesh.text = "PERDISTE";
+            textoMesh.color = Color.red; 
         }
     }
 }
