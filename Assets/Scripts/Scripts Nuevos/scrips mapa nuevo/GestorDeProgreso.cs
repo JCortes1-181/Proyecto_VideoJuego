@@ -25,49 +25,98 @@ public class GestorDeProgreso : MonoBehaviour
         }
     }
 
+    // --- FUNCIÓN INTERNA DE SEGURIDAD ---
+    private string ObtenerClavePorSlot(string nombreClave)
+    {
+        int slotActivo = PlayerPrefs.GetInt("SlotActual", 1);
+        return "Slot_" + slotActivo + "_" + nombreClave;
+    }
+
     // --- FUNCIONES PARA GUARDAR EL PROGRESO ---
 
     public void SuperarNivel1()
     {
         nivel1Completado = true;
-        PlayerPrefs.SetInt("Nivel1", 1); // 1 significa verdadero, 0 falso
+        PlayerPrefs.SetInt(ObtenerClavePorSlot("Nivel1"), 1);
         PlayerPrefs.Save();
-        Debug.Log("¡Nivel 1 Superado! Guardado en memoria.");
+        Debug.Log("¡Nivel 1 Superado! Guardado en la memoria del Slot " + PlayerPrefs.GetInt("SlotActual", 1));
     }
 
     public void SuperarNivel2()
     {
         nivel2Completado = true;
-        PlayerPrefs.SetInt("Nivel2", 1);
+        PlayerPrefs.SetInt(ObtenerClavePorSlot("Nivel2"), 1);
         PlayerPrefs.Save();
-        Debug.Log("¡Nivel 2 Superado! Guardado en memoria.");
+        Debug.Log("¡Nivel 2 Superado! Guardado en la memoria del Slot " + PlayerPrefs.GetInt("SlotActual", 1));
     }
 
     public void SuperarHistoria()
     {
         historiaCompletada = true;
-        PlayerPrefs.SetInt("Historia", 1);
+        PlayerPrefs.SetInt(ObtenerClavePorSlot("Historia"), 1);
         PlayerPrefs.Save();
         Debug.Log("¡Historia Terminada! Biblioteca Desbloqueada.");
     }
 
     // --- FUNCIONES PARA LEER Y REINICIAR ---
 
-    private void CargarProgreso()
+    public void CargarProgreso()
     {
-        // Leemos la memoria. Si no existe el dato, devuelve 0 por defecto (falso)
-        nivel1Completado = PlayerPrefs.GetInt("Nivel1", 0) == 1;
-        nivel2Completado = PlayerPrefs.GetInt("Nivel2", 0) == 1;
-        historiaCompletada = PlayerPrefs.GetInt("Historia", 0) == 1;
+        nivel1Completado = PlayerPrefs.GetInt(ObtenerClavePorSlot("Nivel1"), 0) == 1;
+        nivel2Completado = PlayerPrefs.GetInt(ObtenerClavePorSlot("Nivel2"), 0) == 1;
+        historiaCompletada = PlayerPrefs.GetInt(ObtenerClavePorSlot("Historia"), 0) == 1;
+        
+        Debug.Log("Progreso cargado con éxito para el Slot: " + PlayerPrefs.GetInt("SlotActual", 1));
     }
 
-    // Función útil por si quieres poner un botón de "Borrar Partida" en el menú
     public void BorrarPartida()
     {
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey(ObtenerClavePorSlot("Nivel1"));
+        PlayerPrefs.DeleteKey(ObtenerClavePorSlot("Nivel2"));
+        PlayerPrefs.DeleteKey(ObtenerClavePorSlot("Historia"));
+        PlayerPrefs.Save();
+
         nivel1Completado = false;
         nivel2Completado = false;
         historiaCompletada = false;
-        Debug.Log("Partida borrada desde cero.");
+        Debug.Log("Partida borrada desde cero para el Slot actual.");
+    }
+
+    public void BorrarAbsolutamenteTodo()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        nivel1Completado = false;
+        nivel2Completado = false;
+        historiaCompletada = false;
+        Debug.Log("¡Toda la memoria de la aplicación ha sido eliminada!");
+    }
+
+    // ==========================================
+    //          ¡AÑADIDO NUEVO Y SEGURO!
+    // ==========================================
+
+    // Borra físicamente un slot específico enviado desde el menú
+    public void BorrarProgresoDeSlotEspecifico(int numeroSlot)
+    {
+        PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Nivel1");
+        PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Nivel2");
+        PlayerPrefs.DeleteKey("Slot_" + numeroSlot + "_Historia");
+        PlayerPrefs.Save();
+
+        // Si borramos el slot actual, limpiamos la RAM inmediatamente
+        if (PlayerPrefs.GetInt("SlotActual", 1) == numeroSlot)
+        {
+            ReiniciarVariablesRAM();
+        }
+    }
+
+    public void ReiniciarVariablesRAM()
+    {
+        nivel1Completado = false;
+        nivel2Completado = false;
+        historiaCompletada = false;
+        Debug.Log("RAM reseteada: Nivel 1 bloqueado de nuevo.");
     }
 }

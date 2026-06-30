@@ -3,8 +3,19 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic; // Necesario para usar la Lista
 
-public class MinijuegoCitas : MonoBehaviour
+[System.Serializable]
+public struct DatosPregunta
+{
+    [TextArea] public string pregunta;
+    public string opcionIzquierda;
+    public string opcionDerecha;
+    [Tooltip("0 = La correcta es la Izquierda (A) | 1 = La correcta es la Derecha (D)")]
+    public int indexCorrecto; 
+}
+
+public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para evitar errores
 {
     [Header("PJ")]
     public Image imagenPersonaje; 
@@ -17,9 +28,13 @@ public class MinijuegoCitas : MonoBehaviour
     public Button botonIzquierdo;    
     public Button botonDerecho;   
 
+    [Header("Textos de las Opciones (Hijos de los Botones)")]
+    public TextMeshProUGUI textoOpcionIzquierda;
+    public TextMeshProUGUI textoOpcionDerecha;
+
     [Header("Indicador Visual")]
-    public RectTransform trianguloIndicador; // Arrastra aquí tu triangulito
-    public float ajusteY = 50f; // Para mover el triángulo un poco arriba del botón
+    public RectTransform trianguloIndicador; 
+    public float ajusteY = 50f; 
 
     [Header("Ajustes de Tiempo")]
     public float tiempoLimite = 4f; 
@@ -28,30 +43,48 @@ public class MinijuegoCitas : MonoBehaviour
     public AudioSource fuenteAudio; 
     public AudioClip sonidoEquivocado; 
 
-    [Header("Mensajes")]
-    [TextArea] public string preguntaInicial = "";
+    [Header("Mensajes Globales de Fin")]
     [TextArea] public string mensajeVictoria = "";
     [TextArea] public string mensajeDerrota = "";
+
+    [Header("Banco de Preguntas")]
+    public List<DatosPregunta> listaDePreguntas = new List<DatosPregunta>();
 
     private int seleccionActual = 0; 
     private bool yaRespondio = false;
     private float tiempoRestante;
+    private DatosPregunta preguntaActual; // La pregunta elegida para esta ronda
 
     void Start() {
         tiempoRestante = tiempoLimite;
         if (panelOpciones) panelOpciones.SetActive(true);
-        if (textoDialogo) textoDialogo.text = preguntaInicial;
-        if (imagenPersonaje && Normal) imagenPersonaje.sprite = Normal;
 
-        // El triángulo aparece al inicio
+        // --- SELECCIÓN ALEATORIA DE LA PREGUNTA ---
+        if (listaDePreguntas != null && listaDePreguntas.Count > 0)
+        {
+            int indiceAleatorio = Random.Range(0, listaDePreguntas.Count);
+            preguntaActual = listaDePreguntas[indiceAleatorio];
+
+            // Asignamos los textos de la pregunta elegida a la UI
+            if (textoDialogo) textoDialogo.text = preguntaActual.pregunta;
+            if (textoOpcionIzquierda) textoOpcionIzquierda.text = preguntaActual.opcionIzquierda;
+            if (textoOpcionDerecha) textoOpcionDerecha.text = preguntaActual.opcionDerecha;
+        }
+        else
+        {
+            Debug.LogError("¡El banco de preguntas está vacío! Añade elementos en el Inspector.");
+        }
+
         if (trianguloIndicador) trianguloIndicador.gameObject.SetActive(true);
 
+        // Forzar el primer resaltado al iniciar
         ActualizarResaltado();
     }
 
     void Update() {
         if (yaRespondio) return;
 
+        // --- SISTEMA DE TIEMPO ORIGINAL ---
         tiempoRestante -= Time.deltaTime;
         if (textoTiempo) {
             int seg = Mathf.CeilToInt(tiempoRestante);
@@ -64,6 +97,7 @@ public class MinijuegoCitas : MonoBehaviour
             return;
         }
 
+        // --- RECUPERADO: SISTEMA DE MOVIMIENTO CON A / D ---
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
             seleccionActual = 0;
             ActualizarResaltado();
@@ -73,6 +107,7 @@ public class MinijuegoCitas : MonoBehaviour
             ActualizarResaltado();
         }
 
+        // --- RECUPERADO: CONFIRMAR CON ESPACIO O ENTER ---
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) {
             ConfirmarRespuesta();
         }
@@ -80,20 +115,18 @@ public class MinijuegoCitas : MonoBehaviour
 
     void ActualizarResaltado() {
         Button botonActual = (seleccionActual == 0) ? botonIzquierdo : botonDerecho;
-        botonActual.Select();
+        if (botonActual != null) botonActual.Select();
 
-        // MOVER EL TRIÁNGULO
+        // MOVER EL TRIÁNGULO ORIGINAL
         if (trianguloIndicador != null && botonActual != null) {
-            // Movemos el triángulo a la posición del botón
             trianguloIndicador.position = botonActual.transform.position;
-            
-            // Le sumamos un poco de altura para que no tape el texto
             trianguloIndicador.anchoredPosition += new Vector2(0, ajusteY);
         }
     }
 
     void ConfirmarRespuesta() {
-        bool esCorrecto = (seleccionActual == 0); 
+        // Ahora comprueba dinámicamente según el index correcto de la pregunta elegida
+        bool esCorrecto = (seleccionActual == preguntaActual.indexCorrecto); 
         if (!esCorrecto) ReproducirError();
         Finalizar(esCorrecto);
     }
@@ -104,10 +137,7 @@ public class MinijuegoCitas : MonoBehaviour
 
     void Finalizar(bool ganado) {
         yaRespondio = true;
-        
-        // Al desactivar el panel, el triángulo (si es hijo) desaparece solo
         if (panelOpciones) panelOpciones.SetActive(false);
-        
         StartCoroutine(SecuenciaFinal(ganado));
     }
 
@@ -121,7 +151,7 @@ public class MinijuegoCitas : MonoBehaviour
             ControladorVidas.vidasGlobales--; 
         }
 
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("FreddyFazbear");
+        yield return new WaitForSeconds(3f); // Volvemos a tus 3 segundos originales
+        SceneManager.LoadScene("FreddyFazbear"); // Tu escena de carga original restaurada
     }
 }
