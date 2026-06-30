@@ -14,12 +14,14 @@ public class GridEnemigos : MonoBehaviour
 
     void Update()
     {
+        // === NUEVA LÍNEA AGREGADA ===
+        // Multiplicamos la velocidad base por el modificador de dificultad actual
+        float velocidadActual = velocidad * DifficultyManager.Instance.CurrentMultiplier;
         
         if (moviendoDerecha)
         {
-            
-            transform.Translate(Vector2.right * velocidad * Time.deltaTime);
-            
+            // === CAMBIO: Ahora usamos 'velocidadActual' en vez de 'velocidad' ===
+            transform.Translate(Vector2.right * velocidadActual * Time.deltaTime);
             
             if (transform.position.x >= limiteDerecho)
             {
@@ -28,9 +30,8 @@ public class GridEnemigos : MonoBehaviour
         }
         else
         {
-            
-            transform.Translate(Vector2.left * velocidad * Time.deltaTime);
-            
+            // === CAMBIO: Aquí también usamos 'velocidadActual' ===
+            transform.Translate(Vector2.left * velocidadActual * Time.deltaTime);
             
             if (transform.position.x <= limiteIzquierdo)
             {
@@ -41,10 +42,7 @@ public class GridEnemigos : MonoBehaviour
 
     void BajarYCambiarDireccion()
     {
-        
         moviendoDerecha = !moviendoDerecha;
-
-        
         transform.position = new Vector2(transform.position.x, transform.position.y - distanciaBajada);
     }
 }
