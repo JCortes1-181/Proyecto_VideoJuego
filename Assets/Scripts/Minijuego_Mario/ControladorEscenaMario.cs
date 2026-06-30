@@ -44,7 +44,12 @@ public class ControladorEscenaMario : MonoBehaviour
         }
     }
 
-    void Finalizar(bool ganado) {
+    // --- ÚNICO CAMBIO: Ahora es "public" para recibir la orden del jugador ---
+    public void Finalizar(bool ganado) {
+        
+        // Si el juego ya terminó (ej: se acabó el tiempo justo cuando cayó), no lo repite
+        if (juegoTerminado) return; 
+        
         juegoTerminado = true;
         StartCoroutine(VolverAOficina(ganado));
     }
