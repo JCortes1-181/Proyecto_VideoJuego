@@ -10,7 +10,7 @@ public class ControladorChat : MonoBehaviour
 
     [Header("Configuración del Minijuego")]
     public int letrasNecesarias = 40;
-    public float tiempoLimite = 5f; // ¡Fijado en 5 segundos de pura tensión!
+    public float tiempoLimite = 5f; 
     private float cronometro = 0f;
 
     [Header("Conexión con Efectos Finales")]
@@ -29,21 +29,19 @@ public class ControladorChat : MonoBehaviour
         {
             cuadroTextoSpam.text = "";
         }
-        cronometro = tiempoLimite; // Inicializa los 5 segundos
+        cronometro = tiempoLimite; 
     }
 
     void Update()
     {
         if (juegoTerminado) return;
 
-        // --- LÓGICA DEL TEMPORIZADOR INVISIBLE ---
         cronometro -= Time.deltaTime;
         if (cronometro <= 0)
         {
-            TerminarJuego(false); // Pierde por tiempo agotado
+            TerminarJuego(false); 
             return;
         }
-        // -----------------------------------------
 
         if (Input.anyKeyDown && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
         {
@@ -84,8 +82,11 @@ public class ControladorChat : MonoBehaviour
                 scriptEfectos.ActivarVictoria();
             }
 
-            yield return new WaitForSeconds(2.5f); // 2 segundos y medio para lucirse
-            SceneManager.LoadScene("FreddyFazbear");
+            yield return new WaitForSeconds(2.5f); 
+            
+            // --- NUEVO: Regreso Inteligente ---
+            string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+            SceneManager.LoadScene(escenaDestino);
         }
         else
         {
@@ -95,11 +96,13 @@ public class ControladorChat : MonoBehaviour
                 scriptEfectos.ActivarDerrota();
             }
 
-            // Resta un corazón en el script que controla tus vidas globales
             ControladorVidas.vidasGlobales--; 
 
-            yield return new WaitForSeconds(2.5f); // Se queda el pollo en pantalla con el audio triste
-            SceneManager.LoadScene("FreddyFazbear"); // Te manda de vuelta castigado
+            yield return new WaitForSeconds(2.5f); 
+            
+            // --- NUEVO: Regreso Inteligente ---
+            string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+            SceneManager.LoadScene(escenaDestino);
         }
     }
 }

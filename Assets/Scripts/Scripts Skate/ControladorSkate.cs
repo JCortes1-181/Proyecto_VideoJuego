@@ -20,9 +20,12 @@ public class ControladorSkate : MonoBehaviour
     IEnumerator GanarJuego()
     {
         if (panelVictoria != null) panelVictoria.SetActive(true);
-        Time.timeScale = 0f; // Pausa el juego
+        Time.timeScale = 0f; 
         yield return new WaitForSecondsRealtime(2f);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("FreddyFazbear");
+        
+        // --- NUEVO: Regreso Inteligente ---
+        string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+        SceneManager.LoadScene(escenaDestino);
     }
 }

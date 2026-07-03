@@ -6,11 +6,13 @@ public class ControladorVidas : MonoBehaviour
 {
     public static int vidasGlobales = 4; 
     public GameObject[] corazonesUI;   
-    public GameObject objetoJumpscare; 
+    
+    [Header("Jumpscare (Opcional)")]
+    public GameObject objetoJumpscare; // Déjalo vacío si no quieres jumpscare
     public AudioSource sonidoGrito;   
 
     [Header("UI de Menú")]
-    public GameObject panelGameOver; // Arrastra tu Panel_GameOver aquí
+    public GameObject panelGameOver; 
 
     void Start() {
         ActualizarVisualVidas();
@@ -27,25 +29,26 @@ public class ControladorVidas : MonoBehaviour
             if (MusicaControl.instancia != null) {
                 MusicaControl.instancia.DetenerMusica();
             }
-            StartCoroutine(SecuenciaJumpscare());
+            StartCoroutine(SecuenciaDerrota());
         }
     }
 
-    IEnumerator SecuenciaJumpscare() {
-        if (objetoJumpscare != null) objetoJumpscare.SetActive(true); 
-        if (sonidoGrito != null) {
-            sonidoGrito.gameObject.SetActive(true);
-            sonidoGrito.Play();
+    IEnumerator SecuenciaDerrota() {
+        // --- CAMBIO: Solo hace el Jumpscare si le asignaste un monstruo ---
+        if (objetoJumpscare != null) {
+            objetoJumpscare.SetActive(true); 
+            if (sonidoGrito != null) {
+                sonidoGrito.gameObject.SetActive(true);
+                sonidoGrito.Play();
+            }
+            yield return new WaitForSeconds(3f);
+            objetoJumpscare.SetActive(false);
         }
-
-        yield return new WaitForSeconds(3f);
         
-        // --- CAMBIO PARA EL MENÚ ---
-        if (objetoJumpscare != null) objetoJumpscare.SetActive(false);
         if (panelGameOver != null) panelGameOver.SetActive(true);
         
-        Cursor.visible = true; // Mostramos el mouse para clickear
+        Cursor.visible = true; 
         Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f; // Pausamos el juego
+        Time.timeScale = 0f; 
     }
 }

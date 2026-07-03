@@ -111,6 +111,6 @@ public class ControlJugadorSkateNivel3 : MonoBehaviour
     public void PerderVida()
     {
         // Recarga la escena de castigo
-        SceneManager.LoadScene("FreddyFazbear");
+        SceneManager.LoadScene("Nivel3");
     }
 }

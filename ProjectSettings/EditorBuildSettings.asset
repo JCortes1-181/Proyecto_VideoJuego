@@ -44,5 +44,41 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Historia/HistoriaEtapa1.unity
     guid: a277ac05d215cdb4e9c72ec2c76dbcbe
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/malo.unity
+    guid: 0d6b4debea0b70947afeb9f79483e7c8
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Nivel2.unity
+    guid: 105020e66da2fbb4b93dfcaaee27de9c
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Nivel3.unity
+    guid: b6b34945db3efa14cab126ee48aad247
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_1.unity
+    guid: 270b2c8c145f3374985762f9f3d12ad0
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_2.unity
+    guid: 51459c4ad28a4ee45a6e1730e4ace5cf
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_3.unity
+    guid: 370fb483959dfac4282c33edbf58a0de
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_4.unity
+    guid: 741eb1d547b8284469d7e00f2139e2b4
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_5.unity
+    guid: 773129ec60ed31b42a4057b5bfceaea0
+  - enabled: 1
+    path: Assets/MinijuegosCristobal/Escenas/Minijuego_6.unity
+    guid: c5c7bc95e49ac4b4eb6cee25135f80a6
+  - enabled: 1
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Modo_Dificil/recolectarDificil.unity
+    guid: 43c519d2d3905fd4aa87380261cd84ec
+  - enabled: 1
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Modo_Dificil/SCdificil.unity
+    guid: 3466f8c5dd6775642abe87385373e239
+  - enabled: 1
+    path: Assets/Scenes/Minijuegos-Fase1/MinijuegosTerminados/Modo_Dificil/SkateDificil.unity
+    guid: 6d19ee706b869514a825e50acdb77194
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
