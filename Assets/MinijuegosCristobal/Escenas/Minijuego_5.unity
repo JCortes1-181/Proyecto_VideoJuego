@@ -373,7 +373,7 @@ MonoBehaviour:
   sonidoPatoMalvadoMuere: {fileID: 0}
   sonidoPatoBuenoMuere: {fileID: 0}
   sonidoVictoria: {fileID: 8300000, guid: 3534205a7cfac6641b3e11fa1618d567, type: 3}
-  sonidoDerrota: {fileID: 0}
+  sonidoDerrota: {fileID: 8300000, guid: a1992ded7da643e4cb76b5780180f137, type: 3}
 --- !u!1 &536356258
 GameObject:
   m_ObjectHideFlags: 0
