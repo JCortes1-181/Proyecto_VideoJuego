@@ -29,7 +29,7 @@ public abstract class MinijuegoBase : MonoBehaviour
 
     public abstract void TerminarJuego(bool victoria);
 
-    // --- CORRUTINA CORREGIDA (SIN EL INCREMENTO DOBLE) ---
+    // --- CORRUTINA CORREGIDA (SIN EL INCREMENTO DOBLE) --
     protected IEnumerator EsperarYRegresar(bool victoria)
     {
         juegoTerminado = true;
@@ -47,8 +47,10 @@ public abstract class MinijuegoBase : MonoBehaviour
             Debug.Log("¡Victoria! Regresando de forma segura.");
         }
 
-        // Cargamos la escena central de la oficin
-        Debug.Log("Cargando escena de la oficina de Freddy...");
-        SceneManager.LoadScene("Nivel2");
+        // --- LO NUEVO AGREGADO AQUÍ ---
+        // Buscamos qué nivel guardó el juego en la memoria. Si no hay ninguno, usa "Nivel2" por seguridad.
+        string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "Nivel2");
+        Debug.Log("Cargando escena de regreso de forma dinámica: " + escenaDestino);
+        SceneManager.LoadScene(escenaDestino);
     }
 }

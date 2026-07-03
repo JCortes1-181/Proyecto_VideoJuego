@@ -9,33 +9,41 @@ public class GridEnemigos : MonoBehaviour
     [Header("Límites de la Pantalla")]
     public float limiteIzquierdo = -6f;
     public float limiteDerecho = 6f;
+    
+    // === NUEVO: Límite inferior para perder ===
+    [Header("Límite de Derrota")]
+    public float limiteDerrotaY = -3.5f; 
+
+    [Header("Referencia")]
+    public ControladorSpace controladorJuego;
 
     private bool moviendoDerecha = true;
 
     void Update()
     {
-        // === NUEVA LÍNEA AGREGADA ===
-        // Multiplicamos la velocidad base por el modificador de dificultad actual
+        // Movimiento existente
         float velocidadActual = velocidad * DifficultyManager.Instance.CurrentMultiplier;
         
         if (moviendoDerecha)
         {
-            // === CAMBIO: Ahora usamos 'velocidadActual' en vez de 'velocidad' ===
             transform.Translate(Vector2.right * velocidadActual * Time.deltaTime);
-            
-            if (transform.position.x >= limiteDerecho)
-            {
-                BajarYCambiarDireccion();
-            }
+            if (transform.position.x >= limiteDerecho) BajarYCambiarDireccion();
         }
         else
         {
-            // === CAMBIO: Aquí también usamos 'velocidadActual' ===
             transform.Translate(Vector2.left * velocidadActual * Time.deltaTime);
-            
-            if (transform.position.x <= limiteIzquierdo)
+            if (transform.position.x <= limiteIzquierdo) BajarYCambiarDireccion();
+        }
+
+        foreach (Transform enemigo in transform)
+        {
+            if (enemigo.gameObject.activeSelf && enemigo.position.y <= limiteDerrotaY)
             {
-                BajarYCambiarDireccion();
+                if (controladorJuego != null)
+                {
+                    controladorJuego.JugadorTocado(); 
+                }
+                break; 
             }
         }
     }

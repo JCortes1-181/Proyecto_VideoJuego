@@ -68,6 +68,12 @@ public class SeleccionEtapa : MonoBehaviour
 
         // Configurar botones
         botonJugar.onClick.AddListener(() => {
+            // --- NUEVO: GUARDAR EL NIVEL ORIGEN ANTES DE IRSE ---
+            // Detecta automáticamente si la escena actual se llama "Nivel2" o "Nivel3" y lo anota en la libreta.
+            PlayerPrefs.SetString("EscenaRetorno", SceneManager.GetActiveScene().name);
+            PlayerPrefs.Save();
+
+            // Carga el minijuego de forma normal
             SceneManager.LoadScene(nombreEscenaMinijuego);
         });
 

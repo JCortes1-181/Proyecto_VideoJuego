@@ -368682,7 +368682,7 @@ Transform:
   m_GameObject: {fileID: 1407488009}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24427032, y: 1.2392597, z: -32.37415}
+  m_LocalPosition: {x: -0.2342701, y: 37.72926, z: -32.37415}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -368796,7 +368796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6dfe7f8cf1c27a45be6c78a39e1314c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SeleccionEtapa
-  nombreEscenaMinijuego: HistoriaEtapa1
+  nombreEscenaMinijuego: FreddyFazbear
   fotoDelMinijuego: {fileID: 7784412169563744622, guid: 516c320ff8ad9744994cb2631306e818,
     type: 3}
   panelDetalle: {fileID: 1917094143}

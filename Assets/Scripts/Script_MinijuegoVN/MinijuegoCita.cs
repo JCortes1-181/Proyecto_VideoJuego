@@ -88,11 +88,11 @@ public class MinijuegoCita : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.W)) {
             seleccionActual = 0;
             ActualizarResaltado();
         }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.S)) {
             seleccionActual = 1;
             ActualizarResaltado();
         }
@@ -134,13 +134,12 @@ public class MinijuegoCita : MonoBehaviour
             if (textoDialogo) textoDialogo.text = mensajeVictoria;
         } else {
             if (imagenPersonaje && enojado) imagenPersonaje.sprite = enojado;
-            if (textoDialogo) textoDialogo.text = (tiempoRestante <= 0) ? "¡Te tardaste demasiado!" : mensajeDerrota;
+            if (textoDialogo) textoDialogo.text = (tiempoRestante <= 0) ? "No podias leer mas rapido?" : mensajeDerrota;
             ControladorVidas.vidasGlobales--; 
         }
 
         yield return new WaitForSeconds(3f); 
         
-        // --- NUEVO: Regreso Inteligente ---
         string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
         SceneManager.LoadScene(escenaDestino);
     }
