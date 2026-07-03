@@ -10,20 +10,17 @@ public class ControladorCueva : MonoBehaviour
 
     public enemyController scriptEnemigo; 
 
-    // --- NUEVO: SISTEMA DE TIEMPO ---
     public float tiempoRestante = 5f; 
 
     void Update()
     {
         if (juegoTerminado) return;
 
-        // 1. Condición de Victoria: Enemigo muere
         if (scriptEnemigo != null && scriptEnemigo.estaMuerto) 
         {
              Finalizar(true);
         }
 
-        // 2. Condición de Derrota: El tiempo se agota
         tiempoRestante -= Time.deltaTime;
         if (tiempoRestante <= 0)
         {
@@ -33,7 +30,7 @@ public class ControladorCueva : MonoBehaviour
 
     public void Finalizar(bool ganado)
     {
-        if(juegoTerminado) return; 
+        if (juegoTerminado) return; 
         
         juegoTerminado = true;
         StartCoroutine(VolverAOficina(ganado));
@@ -52,6 +49,9 @@ public class ControladorCueva : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene("FreddyFazbear");
+
+        string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+        Debug.Log("[Sistema Retorno] Saliendo del minijuego de la Cueva hacia: " + escenaDestino);
+        SceneManager.LoadScene(escenaDestino);
     }
 }

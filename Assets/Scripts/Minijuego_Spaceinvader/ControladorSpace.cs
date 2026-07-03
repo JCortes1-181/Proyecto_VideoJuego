@@ -32,7 +32,6 @@ public class ControladorSpace : MonoBehaviour
 
     public void JugadorTocado()
     {
-        
         if(!juegoTerminado)
         {
             Finalizar(false);
@@ -59,6 +58,9 @@ public class ControladorSpace : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("FreddyFazbear");
+        
+        // --- NUEVO: Regreso Inteligente ---
+        string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+        SceneManager.LoadScene(escenaDestino);
     }
 }

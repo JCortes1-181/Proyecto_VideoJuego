@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Collections.Generic; // Necesario para usar la Lista
+using System.Collections.Generic; 
 
 [System.Serializable]
 public struct DatosPregunta
@@ -15,7 +15,7 @@ public struct DatosPregunta
     public int indexCorrecto; 
 }
 
-public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para evitar errores
+public class MinijuegoCita : MonoBehaviour 
 {
     [Header("PJ")]
     public Image imagenPersonaje; 
@@ -28,7 +28,7 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
     public Button botonIzquierdo;    
     public Button botonDerecho;   
 
-    [Header("Textos de las Opciones (Hijos de los Botones)")]
+    [Header("Textos de las Opciones")]
     public TextMeshProUGUI textoOpcionIzquierda;
     public TextMeshProUGUI textoOpcionDerecha;
 
@@ -53,38 +53,29 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
     private int seleccionActual = 0; 
     private bool yaRespondio = false;
     private float tiempoRestante;
-    private DatosPregunta preguntaActual; // La pregunta elegida para esta ronda
+    private DatosPregunta preguntaActual; 
 
     void Start() {
         tiempoRestante = tiempoLimite;
         if (panelOpciones) panelOpciones.SetActive(true);
 
-        // --- SELECCIÓN ALEATORIA DE LA PREGUNTA ---
         if (listaDePreguntas != null && listaDePreguntas.Count > 0)
         {
             int indiceAleatorio = Random.Range(0, listaDePreguntas.Count);
             preguntaActual = listaDePreguntas[indiceAleatorio];
 
-            // Asignamos los textos de la pregunta elegida a la UI
             if (textoDialogo) textoDialogo.text = preguntaActual.pregunta;
             if (textoOpcionIzquierda) textoOpcionIzquierda.text = preguntaActual.opcionIzquierda;
             if (textoOpcionDerecha) textoOpcionDerecha.text = preguntaActual.opcionDerecha;
         }
-        else
-        {
-            Debug.LogError("¡El banco de preguntas está vacío! Añade elementos en el Inspector.");
-        }
 
         if (trianguloIndicador) trianguloIndicador.gameObject.SetActive(true);
-
-        // Forzar el primer resaltado al iniciar
         ActualizarResaltado();
     }
 
     void Update() {
         if (yaRespondio) return;
 
-        // --- SISTEMA DE TIEMPO ORIGINAL ---
         tiempoRestante -= Time.deltaTime;
         if (textoTiempo) {
             int seg = Mathf.CeilToInt(tiempoRestante);
@@ -97,17 +88,15 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
             return;
         }
 
-        // --- RECUPERADO: SISTEMA DE MOVIMIENTO CON A / D ---
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.W)) {
             seleccionActual = 0;
             ActualizarResaltado();
         }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.S)) {
             seleccionActual = 1;
             ActualizarResaltado();
         }
 
-        // --- RECUPERADO: CONFIRMAR CON ESPACIO O ENTER ---
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) {
             ConfirmarRespuesta();
         }
@@ -117,7 +106,6 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
         Button botonActual = (seleccionActual == 0) ? botonIzquierdo : botonDerecho;
         if (botonActual != null) botonActual.Select();
 
-        // MOVER EL TRIÁNGULO ORIGINAL
         if (trianguloIndicador != null && botonActual != null) {
             trianguloIndicador.position = botonActual.transform.position;
             trianguloIndicador.anchoredPosition += new Vector2(0, ajusteY);
@@ -125,7 +113,6 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
     }
 
     void ConfirmarRespuesta() {
-        // Ahora comprueba dinámicamente según el index correcto de la pregunta elegida
         bool esCorrecto = (seleccionActual == preguntaActual.indexCorrecto); 
         if (!esCorrecto) ReproducirError();
         Finalizar(esCorrecto);
@@ -147,11 +134,13 @@ public class MinijuegoCita : MonoBehaviour // Nombre corregido en singular para 
             if (textoDialogo) textoDialogo.text = mensajeVictoria;
         } else {
             if (imagenPersonaje && enojado) imagenPersonaje.sprite = enojado;
-            if (textoDialogo) textoDialogo.text = (tiempoRestante <= 0) ? "¡Te tardaste demasiado!" : mensajeDerrota;
+            if (textoDialogo) textoDialogo.text = (tiempoRestante <= 0) ? "No podias leer mas rapido?" : mensajeDerrota;
             ControladorVidas.vidasGlobales--; 
         }
 
-        yield return new WaitForSeconds(3f); // Volvemos a tus 3 segundos originales
-        SceneManager.LoadScene("FreddyFazbear"); // Tu escena de carga original restaurada
+        yield return new WaitForSeconds(3f); 
+        
+        string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
+        SceneManager.LoadScene(escenaDestino);
     }
 }

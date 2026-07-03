@@ -1347,8 +1347,8 @@ Transform:
   m_GameObject: {fileID: 659268718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1069.07, y: -484.9, z: 0}
-  m_LocalScale: {x: 3.1079931, y: 3.1079931, z: 3.1079931}
+  m_LocalPosition: {x: -1068.1322, y: -642.87994, z: 0}
+  m_LocalScale: {x: 1.0936563, y: 1.0936563, z: 1.0936563}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1246734875}
@@ -1670,8 +1670,8 @@ Transform:
   m_GameObject: {fileID: 708838217}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1072.19, y: -484.90002, z: 0}
-  m_LocalScale: {x: 3.1079931, y: 3.1079931, z: 3.1079931}
+  m_LocalPosition: {x: -1069.23, y: -642.88, z: 0}
+  m_LocalScale: {x: 1.0936563, y: 1.0936563, z: 1.0936563}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1246734875}
@@ -2243,8 +2243,8 @@ Transform:
   m_GameObject: {fileID: 1017196285}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1065.92, y: -484.90002, z: 0}
-  m_LocalScale: {x: 3.1079931, y: 3.1079931, z: 3.1079931}
+  m_LocalPosition: {x: -1067.0238, y: -642.87994, z: 0}
+  m_LocalScale: {x: 1.0936563, y: 1.0936563, z: 1.0936563}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1246734875}
@@ -2335,8 +2335,8 @@ Transform:
   m_GameObject: {fileID: 1123426815}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1062.87, y: -484.90002, z: 0}
-  m_LocalScale: {x: 3.1079931, y: 3.1079931, z: 3.1079931}
+  m_LocalPosition: {x: -1065.9506, y: -642.87994, z: 0}
+  m_LocalScale: {x: 1.0936563, y: 1.0936563, z: 1.0936563}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1246734875}
@@ -3536,6 +3536,15 @@ MonoBehaviour:
   totalMinijuegosParaGanar: 6
   panelVictoria: {fileID: 2069247669}
   panelGameOver: {fileID: 1238849327}
+  numeroDeNivelActual: 1
+  nombreEscenaMapa: NuevoMenu
+  listaMaestra:
+  - Minijuego_Chat
+  - minijuegoSkate
+  - MinijuegoSC
+  - MinijuegoMatar
+  - Minijuego_recolectar
+  - minijuego_espacio
 --- !u!114 &1632697170
 MonoBehaviour:
   m_ObjectHideFlags: 0
