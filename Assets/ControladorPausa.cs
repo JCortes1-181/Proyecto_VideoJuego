@@ -64,6 +64,24 @@ public class ControladorPausa : MonoBehaviour
         }
     }
 
+    public void AlternarPausa()
+    {
+        if (SceneManager.GetActiveScene().name == "MenuPrincipal") 
+        {
+            return; 
+        }
+
+        if (juegoPausado) 
+        {
+            Reanudar();
+        }
+        else 
+        {
+            Pausar();
+        }
+    }
+
+
     public void Pausar()
     {
         if (panelPausa != null) panelPausa.SetActive(true);
