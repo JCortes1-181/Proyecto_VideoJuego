@@ -9,12 +9,12 @@ public class GeneradorObstaculosNivel3 : MonoBehaviour
     [Header("Configuración de Dificultad")]
     public float velocidadObjetos = 8f; 
     public float alturaObstaculoAlto = 2.5f; 
-    public float tiempoMinimo = 1.0f; // Qué tan rápido sale el siguiente
+    public float tiempoMinimo = 1.0f; 
     public float tiempoMaximo = 2.0f;
 
     private float tiempo;
     private float tiempoSiguienteAparicion;
-    private int ultimoObstaculo = -1; // -1: ninguno, 0: suelo, 1: alto
+    private int ultimoObstaculo = -1; 
 
     void Start()
     {
@@ -37,15 +37,12 @@ public class GeneradorObstaculosNivel3 : MonoBehaviour
     {
         int nuevoTipo;
 
-        // Lógica para que no salgan 3 iguales seguidos (Evita patrones aburridos)
         do
         {
-            nuevoTipo = Random.Range(0, 2); // 0 = Suelo, 1 = Alto
+            nuevoTipo = Random.Range(0, 2); 
         } 
         while (nuevoTipo == ultimoObstaculo); 
 
-        // Opcional: Si quieres que sea aún más difícil, puedes hacer que 
-        // a veces no salga nada por 0.5s para engañar al jugador.
 
         GameObject prefabElegido = (nuevoTipo == 0) ? prefabObstaculoSuelo : prefabObstaculoAlto;
         Vector3 posicion = (nuevoTipo == 0) ? transform.position : new Vector3(transform.position.x, transform.position.y + alturaObstaculoAlto, transform.position.z);

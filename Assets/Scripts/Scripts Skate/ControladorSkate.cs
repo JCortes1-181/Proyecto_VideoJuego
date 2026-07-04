@@ -24,7 +24,6 @@ public class ControladorSkate : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         Time.timeScale = 1f;
         
-        // --- NUEVO: Regreso Inteligente ---
         string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
         SceneManager.LoadScene(escenaDestino);
     }

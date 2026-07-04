@@ -19,7 +19,6 @@ public class Moverse_Cueva : MonoBehaviour
     public float radioAtaque = 0.5f;      
     public LayerMask queEsEnemigo;   
 
-    // --- NUEVO: SONIDO DE ATAQUE ---
     public AudioSource audioSource; 
     public AudioClip sonidoAtaque;    
 
@@ -49,7 +48,7 @@ public class Moverse_Cueva : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
         }
 
-        // ATAQUE
+       
         if (Input.GetButtonDown("Fire1")) 
         {
             Atacar();
@@ -60,7 +59,7 @@ public class Moverse_Cueva : MonoBehaviour
     {
         if (animator != null) animator.SetTrigger("Attack");
 
-        // REPRODUCIR SONIDO SI ESTÁ CONFIGURADO
+
         if (audioSource != null && sonidoAtaque != null)
         {
             audioSource.PlayOneShot(sonidoAtaque);

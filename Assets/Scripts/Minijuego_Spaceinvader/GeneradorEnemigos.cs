@@ -3,7 +3,7 @@ using UnityEngine;
 public class GeneradorEnemigos : MonoBehaviour
 {
     [Header("Configuración de la Tropa")]
-    public GameObject prefabEnemigo; // Aquí pondremos el molde de tu nave
+    public GameObject prefabEnemigo; 
     public int filas = 4;
     public int columnas = 8;
     

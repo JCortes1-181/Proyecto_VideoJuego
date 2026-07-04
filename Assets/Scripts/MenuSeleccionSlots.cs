@@ -12,7 +12,6 @@ public class MenuSeleccionSlots : MonoBehaviour
     [Header("Texto de Instrucciones (Nuevo/Opcional)")]
     public TextMeshProUGUI textoIndicador; 
 
-    // Ya no usamos una variable privada aquí. Usamos la global de MenuPrincipal.
 
     void Start()
     {
@@ -39,7 +38,6 @@ public class MenuSeleccionSlots : MonoBehaviour
 
     public void PresionarSlot(int numeroSlot)
     {
-        // --- INTERCEPCIÓN DE BORRADO SINCRONIZADA ---
         if (MenuPrincipal.modoBorradoGlobal)
         {
             EjecutarBorradoDeSlot(numeroSlot);

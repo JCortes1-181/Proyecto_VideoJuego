@@ -3,10 +3,10 @@ using UnityEngine;
 public class ActivadorDialogoJefe : MonoBehaviour
 {
     [Header("Los Diálogos")]
-    public DialogoData dialogo1_Intro;      // Primera vez
-    public DialogoData dialogo2_Derrota;    // Volvió tras rendirse en GameOver
-    public DialogoData dialogo3_Victoria;   // Volvió tras ganar y continuar
-    public DialogoData dialogo4_Fijo;       // Texto para siempre después de terminar
+    public DialogoData dialogo1_Intro;      
+    public DialogoData dialogo2_Derrota;    
+    public DialogoData dialogo3_Victoria;   
+    public DialogoData dialogo4_Fijo;      
 
     [Header("Indicador Visual")]
     public GameObject iconoInteractuar; 

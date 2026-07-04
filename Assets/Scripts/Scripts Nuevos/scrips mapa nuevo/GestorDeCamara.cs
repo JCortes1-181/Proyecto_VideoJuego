@@ -1,6 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using System.Collections; // Necesario para las animaciones
+using System.Collections; 
 
 public class GestorDeCamara : MonoBehaviour
 {
@@ -14,41 +14,41 @@ public class GestorDeCamara : MonoBehaviour
     [Header("Sistema de Bloqueo (La X)")]
     [Tooltip("Arrastra aquí la imagen de la X que creaste en el Canvas")]
     public GameObject imagenEquis; 
-    public float tiempoXVisible = 0.8f; // Segundos que dura la X en pantalla
+    public float tiempoXVisible = 0.8f; 
 
     private int zonaActual = 0; 
-    private bool mostrandoError = false; // Evita que el jugador sature la animación de clics
+    private bool mostrandoError = false; 
 
     private void Awake()
     {
         zonaActual = 0;
         ActualizarCamarasYZonas();
         
-        // Nos aseguramos de que la X empiece apagada siempre
+  
         if(imagenEquis != null) imagenEquis.SetActive(false);
     }
 
     public void SubirPiso()
     {
-        // 1. Preguntamos al "Cerebro" si tenemos permiso para 
+
         bool puedeSubir = false;
 
-        if (zonaActual == 0) // Intenta subir del Nivel 1 al 2
+        if (zonaActual == 0) 
         {
             puedeSubir = GestorDeProgreso.Instancia.nivel1Completado;
         }
-        else if (zonaActual == 1) // Intenta subir del Nivel 2 al 3
+        else if (zonaActual == 1) 
         {
             puedeSubir = GestorDeProgreso.Instancia.nivel2Completado;
         }
 
-        // 2. Si tiene permiso, subimos la cámara
+
         if (puedeSubir && zonaActual < misCamarasVirtuales.Length - 1)
         {
             zonaActual++;
             ActualizarCamarasYZonas();
         }
-        // 3. Si NO tiene permiso, lanzamos la animación de la X
+
         else if (!puedeSubir)
         {
             if (!mostrandoError)
@@ -60,7 +60,7 @@ public class GestorDeCamara : MonoBehaviour
 
     public void BajarPiso()
     {
-        // Bajar siempre está permitido, no requiere validación
+
         if (zonaActual > 0)
         {
             zonaActual--;

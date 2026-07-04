@@ -14,21 +14,14 @@ public class GeneradorEnemigosDificil : MonoBehaviour
 
     public void GenerarOleada(int filas, int columnas, ControladorSpaceDificil controlador)
     {
-        // 1. Limpiar enemigos anteriores si quedó alguno
         foreach (Transform hijo in transform)
         {
             Destroy(hijo.gameObject);
         }
-
-        // 2. Colocar el padre (el grid) en una posición X aleatoria arriba
         float xAleatorio = Random.Range(rangoMinX, rangoMaxX);
         transform.position = new Vector3(xAleatorio, alturaInicioY, 0f);
-
-        // 3. Reiniciar la dirección para que siempre empiece a moverse bien
         GridEnemigosDificil grid = GetComponent<GridEnemigosDificil>();
         if (grid != null) grid.ResetearMovimiento();
-
-        // 4. Instanciar los enemigos en sus posiciones locales
         float inicioX = -(columnas / 2f) * espacioX + (espacioX / 2f);
         float inicioY = 0f;
         int cantidadCreada = 0;
@@ -44,7 +37,6 @@ public class GeneradorEnemigosDificil : MonoBehaviour
             }
         }
 
-        // 5. Avisarle al controlador cuántos enemigos hay que matar
         controlador.RegistrarEnemigos(cantidadCreada);
     }
 }

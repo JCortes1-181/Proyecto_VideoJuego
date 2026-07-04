@@ -8,8 +8,8 @@ public class ControlJugadorSkate : MonoBehaviour
     public float distanciaRaycast = 1.2f;
 
     [Header("Audio")]
-    public AudioSource audioSource; // Arrastra aquí el componente AudioSource
-    public AudioClip sonidoSalto;   // Arrastra aquí tu archivo de sonido (ej. un "jump.wav")
+    public AudioSource audioSource; 
+    public AudioClip sonidoSalto;   
 
     private Rigidbody2D rb;
     private bool enSuelo;
@@ -23,7 +23,7 @@ public class ControlJugadorSkate : MonoBehaviour
 
     void Update()
     {
-        // 1. Detección de suelo
+
         enSuelo = Physics2D.Raycast(transform.position, Vector2.down, distanciaRaycast, LayerMask.GetMask("Suelo"));
 
         if (anim != null)
@@ -31,19 +31,16 @@ public class ControlJugadorSkate : MonoBehaviour
             anim.SetBool("estaEnSuelo", enSuelo);
         }
 
-        // 3. Lógica de Salto con Sonido
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && enSuelo)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, fuerzaSalto);
             
-            // --- REPRODUCIR SONIDO ---
             if (audioSource != null && sonidoSalto != null)
             {
                 audioSource.PlayOneShot(sonidoSalto);
             }
         }
 
-        // 4. Caída al vacío
         if (transform.position.y < -6f)
         {
             PerderVida();

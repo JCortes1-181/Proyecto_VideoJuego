@@ -39,8 +39,6 @@ public class GridEnemigosDificil : MonoBehaviour
             transform.Translate(Vector2.left * velocidadActual * Time.deltaTime);
             if (transform.position.x <= limiteIzquierdo) BajarYCambiarDireccion();
         }
-
-        // Comprobar si llegaron al suelo para perder
         if (transform.position.y <= limiteSuelo)
         {
             if (controlador != null) controlador.EnemigosLlegaronAbajo();

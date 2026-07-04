@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; // NUEVO: Necesario para usar las pausas de tiempo (Corrutinas)
+using System.Collections; 
 
 public class Movimiento_Mario_nuevo : MonoBehaviour
 {
@@ -8,9 +8,9 @@ public class Movimiento_Mario_nuevo : MonoBehaviour
     public AudioSource sonidoRecoger; 
     
     [Header("Secuencia de Caída")]
-    public AudioSource sonidoCaida; // El grito
-    public AudioSource sonidoGolpe; // NUEVO: El golpe contra el piso
-    public float retrasoGolpe = 1f; // NUEVO: Segundos que tarda en sonar el golpe después del grito
+    public AudioSource sonidoCaida; 
+    public AudioSource sonidoGolpe; 
+    public float retrasoGolpe = 1f; 
     public float limiteCaida = -10f; 
     
     private Rigidbody2D rb;
@@ -37,7 +37,6 @@ public class Movimiento_Mario_nuevo : MonoBehaviour
 
         if (transform.position.y < limiteCaida)
         {
-            // En vez de ejecutar la caída de golpe, iniciamos la secuencia de tiempo
             StartCoroutine(SecuenciaCaida());
         }
     }
@@ -62,21 +61,20 @@ public class Movimiento_Mario_nuevo : MonoBehaviour
         }
     }
 
-    // --- NUEVO: Corrutina para la secuencia de grito y golpe ---
     private IEnumerator SecuenciaCaida()
     {
-        yaPerdio = true; // Bloquea el movimiento del jugador
+        yaPerdio = true; 
         
-        // 1. Reproduce el grito
+
         if(sonidoCaida != null) sonidoCaida.Play(); 
         
-        // 2. Espera el tiempo que configuraste en el inspector
+
         yield return new WaitForSeconds(retrasoGolpe);
         
-        // 3. Reproduce el golpe final
+
         if(sonidoGolpe != null) sonidoGolpe.Play();
         
-        // 4. Le avisa a la escena que muestre el GIF de derrota
+
         if (controlador != null)
         {
             controlador.Finalizar(false);

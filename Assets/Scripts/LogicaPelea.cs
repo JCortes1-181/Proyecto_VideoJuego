@@ -63,7 +63,7 @@ public class LogicaPelea : MonoBehaviour
         if (vidasRestantes <= 0)
         {
             Debug.Log("GAME OVER");
-            FinalizarPelea(); // Te devuelve el movimiento al morir
+            FinalizarPelea(); 
         }
         else
         {

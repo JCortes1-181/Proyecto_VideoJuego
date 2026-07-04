@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GeneradorObstaculos : MonoBehaviour
 {
-    public GameObject prefabPiedra; // Arrastra aquí el prefab de tu roca
+    public GameObject prefabPiedra; 
     public float tiempoAparicion = 2.5f;
     public float velocidadPiedra = 7f;
     private float tiempo;
@@ -14,13 +14,12 @@ public class GeneradorObstaculos : MonoBehaviour
         {
             CrearPiedra();
             tiempo = 0;
-            tiempoAparicion = Random.Range(1.8f, 3.5f); // Variedad en la aparición
+            tiempoAparicion = Random.Range(1.8f, 3.5f); 
         }
     }
 
    void CrearPiedra()
 {
-    // Usa la posición real que le pongas al objeto en el editor
     GameObject piedra = Instantiate(prefabPiedra, transform.position, Quaternion.identity);
     
     Rigidbody2D rbPiedra = piedra.GetComponent<Rigidbody2D>();

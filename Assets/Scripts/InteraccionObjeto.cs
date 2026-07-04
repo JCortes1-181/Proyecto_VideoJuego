@@ -18,8 +18,7 @@ public class InteraccionObjeto : MonoBehaviour
 
     void Update()
     {
-        // --- PARACHOQUES DE SEGURIDAD ---
-        // Si falta el diálogo o el texto (común al venir del Menú), salimos del Update
+
         if (cuadroDialogo == null || textoUI == null) return;
 
         if (jugadorCerca && Input.GetKeyDown(KeyCode.X))

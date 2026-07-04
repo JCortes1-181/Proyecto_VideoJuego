@@ -10,7 +10,6 @@ public class GridEnemigos : MonoBehaviour
     public float limiteIzquierdo = -6f;
     public float limiteDerecho = 6f;
     
-    // === NUEVO: Límite inferior para perder ===
     [Header("Límite de Derrota")]
     public float limiteDerrotaY = -3.5f; 
 
@@ -21,7 +20,6 @@ public class GridEnemigos : MonoBehaviour
 
     void Update()
     {
-        // Movimiento existente
         float velocidadActual = velocidad * DifficultyManager.Instance.CurrentMultiplier;
         
         if (moviendoDerecha)

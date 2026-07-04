@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Necesario para el Slider
+using UnityEngine.UI; 
 
 public class ControladorPausa : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class ControladorPausa : MonoBehaviour
     [SerializeField] private GameObject panelPausa;
     
     [Header("Ajustes")]
-    [SerializeField] private Slider sliderVolumen; // El Slider que pondrás en tu PanelPausa
+    [SerializeField] private Slider sliderVolumen; 
 
     private bool juegoPausado = false;
 
@@ -30,14 +30,14 @@ public class ControladorPausa : MonoBehaviour
     {
         if (panelPausa != null) panelPausa.SetActive(false);
 
-        // Cargar el volumen guardado (por defecto 100%)
+  
         float volumenGuardado = PlayerPrefs.GetFloat("VolumenJuego", 1f);
         AudioListener.volume = volumenGuardado;
 
         if (sliderVolumen != null)
         {
             sliderVolumen.value = volumenGuardado;
-            // Conectar el slider a la función automáticamente
+
             sliderVolumen.onValueChanged.AddListener(CambiarVolumen);
         }
     }
@@ -50,7 +50,7 @@ public class ControladorPausa : MonoBehaviour
 
             if (SceneManager.GetActiveScene().name == "MenuPrincipal") 
             {
-                return; // No pausar en el menú principal
+                return; 
             }
 
             if (juegoPausado) 
@@ -96,7 +96,6 @@ public class ControladorPausa : MonoBehaviour
         juegoPausado = false;
     }
 
-    // --- FUNCIÓN DEL VOLUMEN ---
     public void CambiarVolumen(float valor)
     {
         AudioListener.volume = valor;

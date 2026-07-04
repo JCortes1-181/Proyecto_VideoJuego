@@ -21,15 +21,14 @@ public class ControladorSpaceDificil : MonoBehaviour
 
     void Start()
     {
-        oleadaActual = 0; // Aseguramos que empiece en 0
+        oleadaActual = 0; 
         SiguienteOleada();
     }
 
     public void SiguienteOleada()
     {
         oleadaActual++;
-        
-        // Si ya pasamos el número de oleadas, ganamos
+
         if (oleadaActual > oleadasParaGanar)
         {
             Finalizar(true);
@@ -46,7 +45,7 @@ public class ControladorSpaceDificil : MonoBehaviour
 
     public void RegistrarEnemigos(int cantidad)
     {
-        // Fuerza el valor al iniciar la oleada
+
         enemigosRestantes = cantidad;
         Debug.Log("Enemigos en esta oleada: " + enemigosRestantes);
     }
@@ -57,15 +56,13 @@ public class ControladorSpaceDificil : MonoBehaviour
 
         enemigosRestantes--;
         
-        // Solo pasamos de oleada si ya no quedan enemigos
+  
         if (enemigosRestantes <= 0)
         {
             SiguienteOleada();
         }
     }
 
-    // ... (Mantén tus funciones JugadorTocado, EnemigosLlegaronAbajo y Finalizar igual)
-    
     public void JugadorTocado() { if (!juegoTerminado) Finalizar(false); }
     public void EnemigosLlegaronAbajo() { if (!juegoTerminado) Finalizar(false); }
 

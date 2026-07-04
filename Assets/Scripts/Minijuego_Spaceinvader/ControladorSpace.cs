@@ -59,7 +59,7 @@ public class ControladorSpace : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         
-        // --- NUEVO: Regreso Inteligente ---
+        
         string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
         SceneManager.LoadScene(escenaDestino);
     }

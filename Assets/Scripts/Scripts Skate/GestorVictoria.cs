@@ -11,7 +11,6 @@ public class GestorVictoria : MonoBehaviour
 
         if (tiempoParaGanar <= 0)
         {
-            // Victoria: vuelve a la oficina sin restar vidas
             SceneManager.LoadScene("FreddyFazbear");
         }
     }

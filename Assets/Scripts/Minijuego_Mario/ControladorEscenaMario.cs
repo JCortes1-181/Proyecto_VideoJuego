@@ -58,7 +58,6 @@ public class ControladorEscenaMario : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
         
-        // --- NUEVO: Regreso Inteligente --
         string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
         SceneManager.LoadScene(escenaDestino);
     }

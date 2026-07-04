@@ -4,7 +4,7 @@ public class ActivadorDialogo : MonoBehaviour
 {
     [Header("Configuración")]
     public DialogoData miDialogo; 
-    public GameObject iconoInteractuar; // El Canvas/Icono flotante
+    public GameObject iconoInteractuar; 
     
     private bool jugadorCerca = false;
 
@@ -17,7 +17,6 @@ public class ActivadorDialogo : MonoBehaviour
             ManagerDialogos manager = Object.FindFirstObjectByType<ManagerDialogos>();
             if (manager != null && miDialogo != null) {
                 manager.IniciarDialogo(miDialogo);
-                // Apagamos el icono al empezar a hablar
                 if (iconoInteractuar != null) iconoInteractuar.SetActive(false);
             }
         }

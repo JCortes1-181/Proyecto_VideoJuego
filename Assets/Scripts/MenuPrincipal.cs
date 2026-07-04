@@ -18,7 +18,6 @@ public class MenuPrincipal : MonoBehaviour
 
     private bool mirandoOpciones = false;
     
-    // ¡NUEVO: VARIABLE GLOBAL COMPARTIDA!
     public static bool modoBorradoGlobal = false;     
 
     void Start()
@@ -39,7 +38,6 @@ public class MenuPrincipal : MonoBehaviour
         }
     }
 
-    // --- MANEJO DE PANELES ---
     public void AbrirPanelGuardados()
     {
         if (panelPrincipal != null) panelPrincipal.SetActive(false);
@@ -68,7 +66,6 @@ public class MenuPrincipal : MonoBehaviour
         }
     }
 
-    // --- INTERFAZ DE LOS SLOTS ---
     public void ActualizarInterfazSlots()
     {
         if (textoSlot1 != null) textoSlot1.text = GestorGuardado.ExistePartidaEnSlot(1) 
@@ -86,8 +83,6 @@ public class MenuPrincipal : MonoBehaviour
 
     public void SeleccionarSlot(int numeroSlot)
     {
-        // --- INTERCEPCIÓN DE BORRADO ---
-        // Ahora lee la variable global. Si es true, borra y se queda quieto (return).
         if (modoBorradoGlobal)
         {
             EjecutarBorradoDeSlot(numeroSlot);

@@ -9,9 +9,9 @@ using System.Collections.Generic;
 public struct DatosPreguntaDificil
 {
     [TextArea] public string pregunta;
-    public string opcionSuperior; // Antes Izquierda
+    public string opcionSuperior; 
     public string opcionCentral;
-    public string opcionInferior;  // Antes Derecha
+    public string opcionInferior;  
     [Tooltip("0 = Superior (W) | 1 = Centro | 2 = Inferior (S)")]
     public int indexCorrecto; 
 }
@@ -53,11 +53,10 @@ public class MinijuegoCitaDificil : MonoBehaviour
     [Tooltip("Agrega tus preguntas con las 3 respuestas posibles.")]
     public List<DatosPreguntaDificil> bancoDePreguntas;
 
-    // Gestión interna
     private List<DatosPreguntaDificil> preguntasDeEstaPartida = new List<DatosPreguntaDificil>();
     private DatosPreguntaDificil preguntaActual;
-    private int rondaActual = 0; // Cambiará de 0 a 1 (para completar las 2 preguntas)
-    private int seleccionActual = 1; // Empezamos en el centro (0=Superior, 1=Centro, 2=Inferior)
+    private int rondaActual = 0; 
+    private int seleccionActual = 1; 
     private float tiempoRestante;
     private bool yaRespondio = false;
     private bool juegoTerminado = false;
@@ -68,15 +67,12 @@ public class MinijuegoCitaDificil : MonoBehaviour
         juegoTerminado = false;
         rondaActual = 0;
 
-        // Configuración de clicks de mouse por si acaso
         if (botonSuperior) botonSuperior.onClick.AddListener(() => { seleccionActual = 0; ActualizarPosicionFlecha(); });
         if (botonCentral) botonCentral.onClick.AddListener(() => { seleccionActual = 1; ActualizarPosicionFlecha(); });
         if (botonInferior) botonInferior.onClick.AddListener(() => { seleccionActual = 2; ActualizarPosicionFlecha(); });
 
-        // Seleccionar 2 preguntas aleatorias del banco sin repetir
         PrepararPreguntasDeLaPartida();
 
-        // Lanzar la primera pregunta
         CargarPregunta(rondaActual);
     }
 
@@ -84,7 +80,6 @@ public class MinijuegoCitaDificil : MonoBehaviour
     {
         if (juegoTerminado || yaRespondio) return;
 
-        // Contador de tiempo
         tiempoRestante -= Time.deltaTime;
         if (textoTiempo) textoTiempo.text = Mathf.CeilToInt(tiempoRestante).ToString();
 
@@ -94,21 +89,17 @@ public class MinijuegoCitaDificil : MonoBehaviour
             return;
         }
 
-        // --- MOVIMIENTO DE LA FLECHA CON W Y S (O FLECHAS) ---
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            // Subir en la lista implica restar índice (ej: de Centro(1) a Superior(0))
             seleccionActual = Mathf.Max(0, seleccionActual - 1);
             ActualizarPosicionFlecha();
         }
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            // Bajar en la lista implica sumar índice (ej: de Centro(1) a Inferior(2))
             seleccionActual = Mathf.Min(2, seleccionActual + 1);
             ActualizarPosicionFlecha();
         }
 
-        // Confirmar respuesta con Espacio o Enter
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             ConfirmarRespuesta();
@@ -126,7 +117,6 @@ public class MinijuegoCitaDificil : MonoBehaviour
         List<DatosPreguntaDificil> copiaBanco = new List<DatosPreguntaDificil>(bancoDePreguntas);
         preguntasDeEstaPartida.Clear();
 
-        // Extraemos exactamente 2 preguntas al azar
         for (int i = 0; i < 2; i++)
         {
             int indiceAleatorio = Random.Range(0, copiaBanco.Count);
@@ -140,7 +130,6 @@ public class MinijuegoCitaDificil : MonoBehaviour
         yaRespondio = false;
         preguntaActual = preguntasDeEstaPartida[indiceRonda];
 
-        // Asignar textos a los 3 botones verticales
         if (textoDialogo) textoDialogo.text = preguntaActual.pregunta;
         if (textoOpcionSuperior) textoOpcionSuperior.text = preguntaActual.opcionSuperior;
         if (textoOpcionCentral) textoOpcionCentral.text = preguntaActual.opcionCentral;
@@ -154,15 +143,12 @@ public class MinijuegoCitaDificil : MonoBehaviour
         if (imagenPersonaje && spriteNormal) imagenPersonaje.sprite = spriteNormal;
 
         tiempoRestante = tiempoPorPregunta;
-        
-        // La flecha aparece por defecto en el botón del Centro (1) al cambiar de pregunta
         seleccionActual = 1;
         ActualizarPosicionFlecha();
     }
 
     void ActualizarPosicionFlecha()
     {
-        // Buscamos cuál es el botón según el índice actual (0, 1 o 2)
         Button botonObjetivo = null;
         if (seleccionActual == 0) botonObjetivo = botonSuperior;
         else if (seleccionActual == 1) botonObjetivo = botonCentral;
@@ -187,18 +173,15 @@ public class MinijuegoCitaDificil : MonoBehaviour
 
             if (rondaActual >= 2)
             {
-                // Respondió correctamente las 2 preguntas consecutivas -> VICTORIA
                 FinalizarModoDificil(true);
             }
             else
             {
-                // Pasó la primera pregunta, vamos a la segunda
                 StartCoroutine(SiguientePreguntaSecuencia());
             }
         }
         else
         {
-            // Un fallo en modo difícil te hace perder de inmediato
             FinalizarModoDificil(false);
         }
     }

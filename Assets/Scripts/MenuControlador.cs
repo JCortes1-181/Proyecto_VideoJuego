@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Audio; // Fundamental para el volumen
-using UnityEngine.SceneManagement; // Para cargar el juego
-
+using UnityEngine.Audio; 
+using UnityEngine.SceneManagement; 
 public class MenuControlador : MonoBehaviour
 {
     [Header("Paneles de Navegación")]
@@ -11,11 +10,11 @@ public class MenuControlador : MonoBehaviour
     [Header("Configuraciones Técnicas")]
     public AudioMixer masterMixer;
 
-    // --- NAVEGACIÓN ---
+  
 
     public void IniciarJuego()
     {
-        // Cambia "NombreDeTuEscenaJuego" por el nombre real de tu nivel principal
+
         SceneManager.LoadScene("SampleScene"); 
     }
 
@@ -31,11 +30,10 @@ public class MenuControlador : MonoBehaviour
         menuPrincipal.SetActive(true);
     }
 
-    // --- CONFIGURACIONES ---
+  
 
     public void CambiarVolumen(float valor)
     {
-        // MasterVol debe ser el nombre del parámetro expuesto en tu Audio Mixer
         masterMixer.SetFloat("MasterVol", Mathf.Log10(valor) * 20);
     }
 

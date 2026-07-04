@@ -83,8 +83,7 @@ public class ControladorChat : MonoBehaviour
             }
 
             yield return new WaitForSeconds(2.5f); 
-            
-            // --- NUEVO: Regreso Inteligente ---
+
             string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
             SceneManager.LoadScene(escenaDestino);
         }
@@ -100,7 +99,6 @@ public class ControladorChat : MonoBehaviour
 
             yield return new WaitForSeconds(2.5f); 
             
-            // --- NUEVO: Regreso Inteligente ---
             string escenaDestino = PlayerPrefs.GetString("EscenaRetorno", "FreddyFazbear");
             SceneManager.LoadScene(escenaDestino);
         }

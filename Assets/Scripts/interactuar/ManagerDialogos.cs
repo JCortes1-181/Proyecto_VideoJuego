@@ -23,11 +23,9 @@ public class ManagerDialogos : MonoBehaviour
 
     void Start() {
         colaFrases = new Queue<Frase>();
-        
-        // Apaga el panel al inicio para que no estorbe
+
         if (panelDialogo != null) panelDialogo.SetActive(false);
-        
-        // Busca automáticamente el script de movimiento de Marsh
+
         scriptMovimiento = FindAnyObjectByType<Moverse_Mapa2d>();
         if (scriptMovimiento == null) scriptMovimiento = FindAnyObjectByType<PlayerMovement>();
     }
@@ -47,7 +45,7 @@ public class ManagerDialogos : MonoBehaviour
     }
 
     public void SiguienteFrase() {
-        if (estaEscribiendo) return; // No pasa de frase si aún está escribiendo
+        if (estaEscribiendo) return; 
 
         if (colaFrases.Count == 0) {
             FinalizarInteraccion();
@@ -91,7 +89,6 @@ public class ManagerDialogos : MonoBehaviour
     }
 
     void Update() {
-        // Pasar frase con Espacio o Click, solo si el panel está prendido
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && panelDialogo.activeSelf) {
             SiguienteFrase();
         }

@@ -3,8 +3,8 @@ using UnityEngine;
 public class EfectosFinalChat : MonoBehaviour
 {
     [Header("CONFIGURACIÓN DE UI")]
-    public GameObject objetoImagenBaneo;      // Para la victoria
-    public GameObject objetoImagenPollo;      // ¡NUEVO: Para la derrota!
+    public GameObject objetoImagenBaneo;      
+    public GameObject objetoImagenPollo;      
     public GameObject textoSpamJugador;
 
     [Header("AUDIOS DEL MINIJUEGO")]
@@ -46,7 +46,7 @@ public class EfectosFinalChat : MonoBehaviour
         if (fuenteMusicaInterna != null) fuenteMusicaInterna.Stop();
 
         if (textoSpamJugador != null) textoSpamJugador.SetActive(false);
-        if (objetoImagenBaneo != null) objetoImagenBaneo.SetActive(true); // Muestra cartel de baneo
+        if (objetoImagenBaneo != null) objetoImagenBaneo.SetActive(true); 
 
         if (fuenteEfectosInterna != null && sonidoVictoria != null)
         {
@@ -63,7 +63,7 @@ public class EfectosFinalChat : MonoBehaviour
         if (fuenteMusicaInterna != null) fuenteMusicaInterna.Stop();
 
         if (textoSpamJugador != null) textoSpamJugador.SetActive(false);
-        if (objetoImagenPollo != null) objetoImagenPollo.SetActive(true); // ¡Muestra al pollo riéndose!
+        if (objetoImagenPollo != null) objetoImagenPollo.SetActive(true); 
 
         if (fuenteEfectosInterna != null && sonidoDerrota != null)
         {
